@@ -2,7 +2,7 @@
 	Jared Mathes
 	2018-03-20
 	Chapter 3 Drill
-	Form Letter Program - Step 6
+	Form Letter Program - Step 7
 */
 #include "../../../std_lib_facilities.h"
 
@@ -67,6 +67,9 @@ int main()
 	}
 
 	cout << "Please respond soon.\n\n";
+
+	cout << "Yours sincerely,\n\n\n";
+	cout << "Jared Mathes.\n";
 
 	keep_window_open();
 	return 0;
