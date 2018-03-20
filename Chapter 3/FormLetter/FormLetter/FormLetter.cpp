@@ -2,7 +2,7 @@
 	Jared Mathes
 	2018-03-20
 	Chapter 3 Drill
-	Form Letter Program - Step 4
+	Form Letter Program - Step 5
 */
 #include "../../../std_lib_facilities.h"
 
@@ -22,11 +22,22 @@ int main()
 	cout << "If your friend is female, enter the letter F.\n";
 	char friend_sex = 0;
 	cin >> friend_sex;
+	cout << "\n";
+
+	cout << "How old is the recipient of the letter?\n";
+	int age = 0;
+	cin >> age;
+	if (age <= 0 || age >= 110)
+	{
+		simple_error("You're Kidding!\n");
+	}
+	cout << "\n";
 	
 	cout << "\n\n";
 	cout << "Dear " << first_name << ",\n\n";
 	cout << "	How are you doing?  It was so good to hear from you the other day.\n";
 	cout << "We are all interested to hear what you have been up to.\n\n";
+	cout << "I hear you just had a birthday and you are " << age << " years old!\n";
 	cout << "Have you seen " << friend_name << " lately?\n\n";
 
 	if (friend_sex == 'm' || friend_sex == 'M')
