@@ -13,6 +13,10 @@
 *.idb
 *.pdb
 *.obj
+*.ilk
+*.iobj
+*.ipdb
+*.lastbuildstate
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
