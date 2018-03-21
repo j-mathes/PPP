@@ -2,7 +2,7 @@
 	Jared Mathes
 	2018-03-20
 	Chapter 3 Drill
-	Form Letter Program - Step 5
+	Form Letter Program - Step 7
 */
 #include "../../../std_lib_facilities.h"
 
@@ -38,6 +38,22 @@ int main()
 	cout << "	How are you doing?  It was so good to hear from you the other day.\n";
 	cout << "We are all interested to hear what you have been up to.\n\n";
 	cout << "I hear you just had a birthday and you are " << age << " years old!\n";
+
+	if (age < 12)
+	{
+		cout << "Next year you will be " << age + 1 << ".\n";
+	}
+
+	if (age == 17)
+	{
+		cout << "Next year you will be able to vote!\n";
+	}
+
+	if (age > 70)
+	{
+		cout << "I hope you are enjoying your retirement!\n";
+	}
+
 	cout << "Have you seen " << friend_name << " lately?\n\n";
 
 	if (friend_sex == 'm' || friend_sex == 'M')
@@ -51,6 +67,9 @@ int main()
 	}
 
 	cout << "Please respond soon.\n\n";
+
+	cout << "Yours sincerely,\n\n\n";
+	cout << "Jared Mathes.\n";
 
 	keep_window_open();
 	return 0;
