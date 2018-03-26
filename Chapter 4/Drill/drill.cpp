@@ -1,7 +1,7 @@
 /*
 Jared Mathes
 2018-03-26
-Chapter 4-4
+Chapter 4-5
 Drill
 */
 #include "../../std_lib_facilities.h"
@@ -25,6 +25,11 @@ int main()
 
 			double larger = number1 > number2 ? number1 : number2;
 			cout << "\nThe larger value is: " << larger << "\n";
+
+			if ((larger - smaller) < 1.0)
+			{
+				cout << "\nThe numbers are almost the same!\n";
+			}
 		}
 
 		cout << "\nPlease enter two numbers separated by a space. >";
