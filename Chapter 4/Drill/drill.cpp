@@ -1,38 +1,43 @@
 /*
 Jared Mathes
 2018-03-26
-Chapter 4-5
+Chapter 4-6
 Drill
 */
 #include "../../std_lib_facilities.h"
 
 int main()
 {
-	double number1{ 0.0 };
-	double number2{ 0.0 };
+	double number{ 0.0 };
+	double largest;
+	double smallest;
+	bool firstTime = true;
 	
-	cout << "Please enter two numbers separated by a space. >";
-	while (cin >> number1 >> number2)
+	cout << "Please enter a number >";
+	while (cin >> number)
 	{
-		if (number1 == number2)
+		if (firstTime)
 		{
-			cout << "\nThe numbers are equal!\n";
-		} 
-		else
-		{
-			double smaller = number1 < number2 ? number1 : number2;
-			cout << "\nThe smaller value is: " << smaller << "\n";
-
-			double larger = number1 > number2 ? number1 : number2;
-			cout << "\nThe larger value is: " << larger << "\n";
-
-			if ((larger - smaller) < 1.0)
-			{
-				cout << "\nThe numbers are almost the same!\n";
-			}
+			smallest = number;
+			largest = number;
+			cout << smallest << " is the smallest number so far.\n";
+			cout << largest << " is the largest number so far.\n";
+			firstTime = false;
 		}
+		cout << "\nThe number entered is " << number << ".\n";
+		if (number < smallest)
+		{
+			smallest = number;
+			cout << smallest << " is the smallest number so far.\n";
+		} 
 
-		cout << "\nPlease enter two numbers separated by a space. >";
+		if (number > largest)
+		{
+			largest = number;
+			cout << largest << " is the largest number so far.\n";
+		}
+		
+		cout << "\nPlease enter a number >";
 	}
 	
 	return 0;
