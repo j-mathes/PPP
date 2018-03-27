@@ -1,7 +1,7 @@
 /*
 Jared Mathes
 2018-03-26
-Chapter 4-7
+Chapter 4-8
 Drill
 */
 #include "../../std_lib_facilities.h"
@@ -14,6 +14,7 @@ int main()
 	double largest;
 	double smallest;
 	bool firstTime = true;
+	bool badInput = false;
 	
 	cout << "Please enter a number followed by the units (cm, in, ft, m) >";
 	while (cin >> number >> units)
@@ -34,30 +35,40 @@ int main()
 		{
 			conversionFactor = 100;
 		}
-
-		double convertedNumber = number * conversionFactor;
-	
-		if (firstTime)
+		else
 		{
-			smallest = convertedNumber;
-			largest = convertedNumber;
-			cout << number << " " << units <<" is the smallest number so far.\n";
-			cout << number << " " << units << " is the largest number so far.\n";
-			firstTime = false;
+			cout << "\n\n" << units << " is not a valid unit type.\n\n";
+			badInput = true;
 		}
-		cout << "\nThe number entered is " << number << " " << units << ".\n";
 
-		if (convertedNumber < smallest)
+		if (!badInput)
 		{
-			smallest = convertedNumber;
-			cout << number << " " << units << " is the smallest number so far.\n";
-		} 
+			double convertedNumber = number * conversionFactor;
 
-		if (convertedNumber > largest)
-		{
-			largest = convertedNumber;
-			cout << number << " " << units << " is the largest number so far.\n";
+			if (firstTime)
+			{
+				smallest = convertedNumber;
+				largest = convertedNumber;
+				cout << number << " " << units << " is the smallest number so far.\n";
+				cout << number << " " << units << " is the largest number so far.\n";
+				firstTime = false;
+			}
+			cout << "\nThe number entered is " << number << " " << units << ".\n";
+
+			if (convertedNumber < smallest)
+			{
+				smallest = convertedNumber;
+				cout << number << " " << units << " is the smallest number so far.\n";
+			}
+
+			if (convertedNumber > largest)
+			{
+				largest = convertedNumber;
+				cout << number << " " << units << " is the largest number so far.\n";
+			}
 		}
+
+		badInput = false;
 		
 		cout << "\nPlease enter a number followed by the units (cm, in, ft, m) >";
 	}
