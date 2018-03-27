@@ -1,7 +1,7 @@
 /*
 Jared Mathes
 2018-03-26
-Chapter 4-6
+Chapter 4-7
 Drill
 */
 #include "../../std_lib_facilities.h"
@@ -9,35 +9,57 @@ Drill
 int main()
 {
 	double number{ 0.0 };
+	string units;
+	double conversionFactor = 1.0;
 	double largest;
 	double smallest;
 	bool firstTime = true;
 	
-	cout << "Please enter a number >";
-	while (cin >> number)
+	cout << "Please enter a number followed by the units (cm, in, ft, m) >";
+	while (cin >> number >> units)
 	{
+		if (units == "cm" || units == "CM")
+		{
+			conversionFactor = 1.0;
+		} 
+		else if (units == "in" || units == "IN")
+		{
+			conversionFactor = 2.54;
+		} 
+		else if (units == "ft" || units == "FT")
+		{
+			conversionFactor = 12 * 2.54;
+		}
+		else if (units == "m" || units == "M")
+		{
+			conversionFactor = 100;
+		}
+
+		double convertedNumber = number * conversionFactor;
+	
 		if (firstTime)
 		{
-			smallest = number;
-			largest = number;
-			cout << smallest << " is the smallest number so far.\n";
-			cout << largest << " is the largest number so far.\n";
+			smallest = convertedNumber;
+			largest = convertedNumber;
+			cout << number << " " << units <<" is the smallest number so far.\n";
+			cout << number << " " << units << " is the largest number so far.\n";
 			firstTime = false;
 		}
-		cout << "\nThe number entered is " << number << ".\n";
-		if (number < smallest)
+		cout << "\nThe number entered is " << number << " " << units << ".\n";
+
+		if (convertedNumber < smallest)
 		{
-			smallest = number;
-			cout << smallest << " is the smallest number so far.\n";
+			smallest = convertedNumber;
+			cout << number << " " << units << " is the smallest number so far.\n";
 		} 
 
-		if (number > largest)
+		if (convertedNumber > largest)
 		{
-			largest = number;
-			cout << largest << " is the largest number so far.\n";
+			largest = convertedNumber;
+			cout << number << " " << units << " is the largest number so far.\n";
 		}
 		
-		cout << "\nPlease enter a number >";
+		cout << "\nPlease enter a number followed by the units (cm, in, ft, m) >";
 	}
 	
 	return 0;
