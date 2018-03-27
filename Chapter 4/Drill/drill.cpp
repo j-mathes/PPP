@@ -1,7 +1,7 @@
 /*
 Jared Mathes
 2018-03-26
-Chapter 4-8
+Chapter 4-9
 Drill
 */
 #include "../../std_lib_facilities.h"
@@ -10,11 +10,13 @@ int main()
 {
 	double number{ 0.0 };
 	string units;
-	double conversionFactor = 1.0;
+	double conversionFactor{ 1.0 };
 	double largest;
 	double smallest;
-	bool firstTime = true;
-	bool badInput = false;
+	bool firstTime{ true };
+	bool badInput{ false };
+	int valuesEntered{ 0 };
+	double sum{ 0 };
 	
 	cout << "Please enter a number followed by the units (cm, in, ft, m) >";
 	while (cin >> number >> units)
@@ -43,7 +45,9 @@ int main()
 
 		if (!badInput)
 		{
+			valuesEntered++;
 			double convertedNumber = number * conversionFactor;
+			sum += convertedNumber;
 
 			if (firstTime)
 			{
@@ -66,6 +70,11 @@ int main()
 				largest = convertedNumber;
 				cout << number << " " << units << " is the largest number so far.\n";
 			}
+
+			cout << "\nThe smallest number (converted to meters) is " << smallest / 100 << " m.\n";
+			cout << "The largest number (converted to meters) is " << largest / 100 << " m.\n";
+			cout << "The number of values entered is " << valuesEntered << ".\n";
+			cout << "The sum of all values entered is " << sum / 100 << " m.\n";
 		}
 
 		badInput = false;
