@@ -1,13 +1,14 @@
 /*
 Jared Mathes
 2018-03-26
-Chapter 4-9
+Chapter 4-10
 Drill
 */
 #include "../../std_lib_facilities.h"
 
 int main()
 {
+	vector<double> numbers;
 	double number{ 0.0 };
 	string units;
 	double conversionFactor{ 1.0 };
@@ -75,6 +76,8 @@ int main()
 			cout << "The largest number (converted to meters) is " << largest / 100 << " m.\n";
 			cout << "The number of values entered is " << valuesEntered << ".\n";
 			cout << "The sum of all values entered is " << sum / 100 << " m.\n";
+
+			numbers.push_back(convertedNumber);
 		}
 
 		badInput = false;
@@ -82,5 +85,13 @@ int main()
 		cout << "\nPlease enter a number followed by the units (cm, in, ft, m) >";
 	}
 	
+	cout << "\n";
+	for (size_t x{ 0 }; x < numbers.size(); ++x)
+	{
+		cout << "\n" << numbers[x] << " meters.";
+	}
+
+	cout << "\n";
+
 	return 0;
 }
