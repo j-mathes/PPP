@@ -1,7 +1,7 @@
 /*
 Jared Mathes
 2018-03-26
-Chapter 4-10
+Chapter 4-11
 Drill
 */
 #include "../../std_lib_facilities.h"
@@ -86,9 +86,11 @@ int main()
 	}
 	
 	cout << "\n";
+	sort(numbers);
+
 	for (size_t x{ 0 }; x < numbers.size(); ++x)
 	{
-		cout << "\n" << numbers[x] << " meters.";
+		cout << "\n" << numbers[x] / 100 << " meters.";
 	}
 
 	cout << "\n";
