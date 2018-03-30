@@ -88,7 +88,7 @@ int main()
 	cout << "\n";
 	sort(numbers);
 
-	for (size_t x{ 0 }; x < numbers.size(); ++x)
+	for (unsigned int x{ 0 }; x < numbers.size(); ++x)
 	{
 		cout << "\n" << numbers[x] / 100 << " meters.";
 	}
