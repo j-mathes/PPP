@@ -23,7 +23,24 @@ int main()
 
 	// compute median temperature
 	sort(temps);
-	cout << "Median temperature: " << temps[temps.size() / 2] << '\n';
+
+	for (int i{ 0 }; i<temps.size(); ++i)
+	{
+		cout << temps[i] << '\n';
+	}
+
+	if (temps.size() % 2 == 0 )
+	{
+		// case for even
+		int index = (temps.size() / 2) - 1;
+		double med = (temps[index] + temps[index + 1]) / 2;
+		cout << "Median temperature: " << med  << '\n';
+	}
+	else
+	{
+		// case for odd
+		cout << "Median temperature: " << temps[temps.size() / 2] << '\n';
+	}
 
 	return 0;
 }
