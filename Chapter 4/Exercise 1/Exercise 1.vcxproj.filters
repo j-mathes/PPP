@@ -27,5 +27,8 @@
     <ClCompile Include="Ex-01-TT-4.5.1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Ex-01-TT-4.6.4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
