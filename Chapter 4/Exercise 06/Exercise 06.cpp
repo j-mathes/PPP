@@ -23,23 +23,6 @@ void initialize_numbers()
 	literal_number.push_back("nine");
 }
 
-int get_number()
-{
-	const int not_a_symbol = literal_number.size();	// not_a_symbol is a value that does not correspond
-													// to a string in the numbers vector
-	int val = not_a_symbol;
-	if (cin >> val) return val;						// try to read an integer composed of digits
-
-	cin.clear();									// clear string after failed attempt to read an integer
-	string s;
-	cin >> s;
-	for (int i = 0; i < literal_number.size(); ++i)	// see if the string is in numbers
-		if (literal_number[i] == s) val = i;
-	if (val == not_a_symbol) error("unexpected number string: ", s);
-
-	return val;
-}
-
 int main()
 {
 	initialize_numbers();
