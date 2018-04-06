@@ -34,7 +34,7 @@ int main()
 		x1 = -(c / b);
 		cout << "\nOne root = " << x1 << '\n';
 	}
-	else //if (((b*b) - (4*a*c)) > 0)
+	else
 	{
 		if (((b*b) - (4 * a*c)) < 0)
 		{
