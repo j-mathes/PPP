@@ -2,14 +2,14 @@
 // 2018-04-09
 // Chapter 5
 // Drill
-// Step 3
-// statement not terminated with ;
-// string not enclosed in "
+// Step 4
+// string variable 'success' not defined
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	cout << "Success" << "!\n";
+	string success = "Success!";
+	cout << success << '\n';
 		keep_window_open();
 	return 0;
 }
