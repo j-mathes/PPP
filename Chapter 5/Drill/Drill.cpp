@@ -2,8 +2,8 @@
 // 2018-04-09
 // Chapter 5
 // Drill
-// Step 1
-// cout was capitalized
+// Step 2
+// string constant not terminated with "
 
 #include "../../std_lib_facilities.h"
 int main()
