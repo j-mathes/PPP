@@ -2,12 +2,13 @@
 // 2018-04-09
 // Chapter 5
 // Drill
-// Step 0
+// Step 1
+// cout was capitalized
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	<< your code here >>
+	cout << "Success!\n";
 		keep_window_open();
 	return 0;
 }
