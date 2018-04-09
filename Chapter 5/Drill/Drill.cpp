@@ -2,13 +2,14 @@
 // 2018-04-09
 // Chapter 5
 // Drill
-// Step 2
-// string constant not terminated with "
+// Step 3
+// statement not terminated with ;
+// string not enclosed in "
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	cout << "Success!\n";
+	cout << "Success" << "!\n";
 		keep_window_open();
 	return 0;
 }
