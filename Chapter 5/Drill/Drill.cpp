@@ -2,14 +2,16 @@
 // 2018-04-09
 // Chapter 5
 // Drill
-// Step 4
-// string variable 'success' not defined
+// Step 5
+// 'res' should be defined as int
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	string success = "Success!";
-	cout << success << '\n';
+	int res = 7; 
+	vector<int> v(10); 
+	v[5] = res; 
+	cout << "Success!\n";
 		keep_window_open();
 	return 0;
 }
