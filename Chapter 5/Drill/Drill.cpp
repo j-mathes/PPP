@@ -2,13 +2,15 @@
 // 2018-04-09
 // Chapter 5
 // Drill
-// Step 7
-// variable cond not defined
+// Step 8
+// bool should be changed to true
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	if (true) cout << "Success!\n"; else cout << "Fail!\n";
+	bool c = true; 
+	if (c) cout << "Success!\n"; 
+	else cout << "Fail!\n";
 	keep_window_open();
 	return 0;
 }
