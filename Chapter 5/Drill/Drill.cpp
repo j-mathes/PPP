@@ -2,16 +2,15 @@
 // 2018-04-09
 // Chapter 5
 // Drill
-// Step 9
-// 'c' not properly defined as bool
-// changed comparison to determine 'c'
+// Step 10
+// changed comparison for 's'
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
 	string s = "ape"; 
-	bool c = "fool" > s; 
-	if (c) cout << "Success!\n";
+	if (s != "fool") 
+		cout << "Success!\n";
 	keep_window_open();
 	return 0;
 }
