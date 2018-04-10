@@ -2,14 +2,15 @@
 // 2018-04-10
 // Chapter 5
 // Drill
-// Step 16
-// 'then' is not necessary
+// Step 17
+// char cannot hold the value 2000
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	if (true) cout << "Success!\n"; 
-	else cout << "Fail!\n";
+	int x = 2000; 
+	int c = x; 
+	if (c == 2000) cout << "Success!\n";
 	keep_window_open();
 	return 0;
 }
