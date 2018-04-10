@@ -2,16 +2,13 @@
 // 2018-04-09
 // Chapter 5
 // Drill
-// Step 6
-// vector indices should be in square brackets
-// comparison should be == instead of !=
+// Step 7
+// variable cond not defined
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	vector<int> v(10); 
-	v[5] = 7; 
-	if (v[5] == 7) cout << "Success!\n";
+	if (true) cout << "Success!\n"; else cout << "Fail!\n";
 	keep_window_open();
 	return 0;
 }
