@@ -2,17 +2,17 @@
 // 2018-04-09
 // Chapter 5
 // Drill
-// Step 5
-// 'res' should be defined as int
+// Step 6
+// vector indices should be in square brackets
+// comparison should be == instead of !=
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	int res = 7; 
 	vector<int> v(10); 
-	v[5] = res; 
-	cout << "Success!\n";
-		keep_window_open();
+	v[5] = 7; 
+	if (v[5] == 7) cout << "Success!\n";
+	keep_window_open();
 	return 0;
 }
 catch (exception& e) {
