@@ -2,16 +2,17 @@
 // 2018-04-10
 // Chapter 5
 // Drill
-// Step 22
-// string type not compatible with char template
-// changed test expression and iterator max limit
+// Step 23
+// 'j' not defined
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	string s = "Success!\n"; 
-	for (int i = 0; i < s.size(); ++i) 
-		cout << s[i];
+	int i = 0; 
+	int j = 9;
+	while (i < 10) ++i; 
+	if (j<i) 
+		cout << "Success!\n";
 	keep_window_open();
 	return 0;
 }
