@@ -2,15 +2,15 @@
 // 2018-04-10
 // Chapter 5
 // Drill
-// Step 12
-// expression is not a bool type
+// Step 13
+// for loop test expression should compare iterator to size
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	string s = "ape"; 
-	if (s != "fool")
-		cout << "Success!\n";
+	vector<char> v(5); 
+	for (int i = 0; i < v.size(); ++i); 
+	cout << "Success!\n";
 	keep_window_open();
 	return 0;
 }
