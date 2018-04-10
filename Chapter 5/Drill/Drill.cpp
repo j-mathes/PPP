@@ -2,15 +2,15 @@
 // 2018-04-10
 // Chapter 5
 // Drill
-// Step 17
-// char cannot hold the value 2000
+// Step 18
+// technically runs, but iterator should count up to the size of the string
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	int x = 2000; 
-	int c = x; 
-	if (c == 2000) cout << "Success!\n";
+	string s = "Success!\n"; 
+	for (int i = 0; i<s.size(); ++i) 
+		cout << s[i];
 	keep_window_open();
 	return 0;
 }
