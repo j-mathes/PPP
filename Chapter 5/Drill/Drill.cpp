@@ -2,14 +2,14 @@
 // 2018-04-10
 // Chapter 5
 // Drill
-// Step 11
-// missing second < for cout
+// Step 12
+// expression is not a bool type
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
 	string s = "ape"; 
-	if (s != "fool") 
+	if (s != "fool")
 		cout << "Success!\n";
 	keep_window_open();
 	return 0;
