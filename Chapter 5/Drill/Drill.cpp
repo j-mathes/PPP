@@ -2,16 +2,15 @@
 // 2018-04-10
 // Chapter 5
 // Drill
-// Step 23
-// 'j' not defined
+// Step 24
+// works as entered
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	int i = 0; 
-	int j = 9;
-	while (i < 10) ++i; 
-	if (j<i) 
+	int x = 4; 
+	double d = 5 / (x-2); 
+	if (d = 2 * x + 0.5) 
 		cout << "Success!\n";
 	keep_window_open();
 	return 0;
