@@ -2,20 +2,16 @@
 // 2018-04-10
 // Chapter 5
 // Drill
-// Step 20
-// test expressions never produce conditions to produce output
-// change ++j to ++i to satisfy
+// Step 21
+// changed math expressions to produce output
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	int i = 0; 
-	int j = 9; 
-	while (i < 10)
-	{
-		++i;
-		if (j < i) cout << "Success!\n";
-	}
+	int x = 2; 
+	double d = 5.0; 
+	if (d == 2 * (x + 0.5)) 
+		cout << "Success!\n";
 	keep_window_open();
 	return 0;
 }
