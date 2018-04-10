@@ -2,15 +2,15 @@
 // 2018-04-10
 // Chapter 5
 // Drill
-// Step 14
-// no errors
+// Step 15
+// test expression should loop to the max size of 's'
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	vector<char> v(5); 
-	for (int i = 0; i <= v.size(); ++i); 
-	cout << "Success!\n";;
+	string s = "Success!\n"; 
+	for (int i = 0; i < s.size(); ++i) 
+		cout << s[i];
 	keep_window_open();
 	return 0;
 }
