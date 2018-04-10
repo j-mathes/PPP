@@ -2,15 +2,14 @@
 // 2018-04-10
 // Chapter 5
 // Drill
-// Step 15
-// test expression should loop to the max size of 's'
+// Step 16
+// 'then' is not necessary
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	string s = "Success!\n"; 
-	for (int i = 0; i < s.size(); ++i) 
-		cout << s[i];
+	if (true) cout << "Success!\n"; 
+	else cout << "Fail!\n";
 	keep_window_open();
 	return 0;
 }
