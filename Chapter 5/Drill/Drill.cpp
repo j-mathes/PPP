@@ -2,15 +2,20 @@
 // 2018-04-10
 // Chapter 5
 // Drill
-// Step 19
-// type of vector not defined
+// Step 20
+// test expressions never produce conditions to produce output
+// change ++j to ++i to satisfy
 
 #include "../../std_lib_facilities.h"
 int main()
 try {
-	vector<int> v(5); 
-	for (int i = 0; i <= v.size(); ++i); 
-	cout << "Success!\n";
+	int i = 0; 
+	int j = 9; 
+	while (i < 10)
+	{
+		++i;
+		if (j < i) cout << "Success!\n";
+	}
 	keep_window_open();
 	return 0;
 }
