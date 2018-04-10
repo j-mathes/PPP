@@ -1,9 +1,9 @@
 // Jared Mathes
-// 2018-04-09
+// 2018-04-10
 // Chapter 5
 // Drill
-// Step 10
-// changed comparison for 's'
+// Step 11
+// missing second < for cout
 
 #include "../../std_lib_facilities.h"
 int main()
