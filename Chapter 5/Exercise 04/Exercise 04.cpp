@@ -5,7 +5,6 @@
 // Celsius to Kelvin
 // Check for valid input inside function
 
-
 #include "../../std_lib_facilities.h"
 
 class Bad_temperature {};	// type for reporting temperatures that are not acceptable
@@ -29,12 +28,12 @@ int main()
 
 	cout << "Enter a the number of degrees Celsius to convert to Kelvin >";
 
-	try 
+	try
 	{
 		cin >> c;               // retrieve temperature to input variable
 
 		double k = ctok(c);		// convert temperature
-		cout << k << '/n';      // print out temperature
+		cout << k << '\n';      // print out temperature
 	}
 	catch (Bad_temperature)
 	{
