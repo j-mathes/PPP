@@ -331,3 +331,4 @@ ASALocalRun/
 
 # NVidia Nsight GPU debugger configuration file
 *.nvuser
+/Chapter 5/Exercise 04
