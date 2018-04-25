@@ -9,7 +9,7 @@
 
 class Bad_temperature {};	// type for reporting temperatures that are not acceptable
 
-double ctok(double c)		// converts Celsius to Kelvin
+double ctof(double c)		// converts Celsius to Kelvin
 {
 	if (c <= -273.15)
 	{
@@ -32,7 +32,7 @@ int main()
 	{
 		cin >> c;               // retrieve temperature to input variable
 
-		double k = ctok(c);		// convert temperature
+		double k = ctof(c);		// convert temperature
 		cout << k << '\n';      // print out temperature
 	}
 	catch (Bad_temperature)
