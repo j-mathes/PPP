@@ -74,7 +74,7 @@ Token Token_stream::get()
 	cin >> ch;    // note that >> skips whitespace (space, newline, tab, etc.)
 
 	switch (ch) {
-	case ';':    // for "print"
+	case '=':    // for "print"
 	case 'x':    // for "quit"
 	case '(': case ')': case '+': case '-': case '*': case '/':
 		return Token(ch);        // let each character represent itself
@@ -178,32 +178,38 @@ double expression()
 //------------------------------------------------------------------------------
 
 int main()
-try
 {
-	double val{ 0 };
-	while (cin) {
-		Token t = ts.get();
+	cout << "Welcome to our simple calculator.\n";
+	cout << "Please enter expressions using floating point numbers.\n\n";
+	cout << "The following operators can be used: +, -, *, /, (, ).\n";
+	cout << "'=' to print your answer, 'x' to exit.\n\n";
+	try
+	{
+		double val{ 0 };
+		while (cin) {
+			Token t = ts.get();
 
-		if (t.kind == 'x') break; // 'x' for quit
-		if (t.kind == ';')        // ';' for "print now"
-			cout << "=" << val << '\n';
-		else
-		{							// Logical Error #3: these needed to be in a code block
-			ts.putback(t);
-			val = expression();
+			if (t.kind == 'x') break; // 'x' for quit
+			if (t.kind == '=')        // ';' for "print now"
+				cout << "=" << val << '\n';
+			else
+			{							// Logical Error #3: these needed to be in a code block
+				ts.putback(t);
+				val = expression();
+			}
 		}
+		keep_window_open();
 	}
-	keep_window_open();
-}
-catch (exception& e) {
-	cerr << "error: " << e.what() << '\n';
-	keep_window_open();
-	return 1;
-}
-catch (...) {
-	cerr << "Oops: unknown exception!\n";
-	keep_window_open();
-	return 2;
+	catch (exception& e) {
+		cerr << "error: " << e.what() << '\n';
+		keep_window_open();
+		return 1;
+	}
+	catch (...) {
+		cerr << "Oops: unknown exception!\n";
+		keep_window_open();
+		return 2;
+	}
 }
 
 //------------------------------------------------------------------------------
