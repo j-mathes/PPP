@@ -80,7 +80,7 @@ Token Token_stream::get()
 		return Token(ch);        // let each character represent itself
 	case '.':
 	case '0': case '1': case '2': case '3': case '4':
-	case '5': case '6': case '7': case '9':
+	case '5': case '6': case '7': case '8': case '9':		// Logical Error #1: case for number 8 was missing
 	{
 		cin.putback(ch);         // put digit back into the input stream
 		double val;
@@ -134,6 +134,7 @@ double term()
 		case '*':
 			left *= primary();
 			t = ts.get();
+			break;				// Logical Error #2: break was missing
 		case '/':
 		{
 			double d = primary();
@@ -187,8 +188,10 @@ try
 		if (t.kind == ';')        // ';' for "print now"
 			cout << "=" << val << '\n';
 		else
+		{							// Logical Error #3: these needed to be in a code block
 			ts.putback(t);
-		val = expression();
+			val = expression();
+		}
 	}
 	keep_window_open();
 }
