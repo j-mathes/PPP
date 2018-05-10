@@ -108,7 +108,7 @@ int factorial(int num)
 	if (num > 0)
 	{
 		int answer{ 1 };
-		for (int i = 1; i < num + 1; ++num)
+		for (int i = 1; i < num + 1; ++i)
 		{
 			answer *= i;
 		}
@@ -152,8 +152,11 @@ double primary()
 	{
 		int number = t.value;
 		t = ts.get();
-		if (t.kind = '!')
+		if (t.kind = '!')	// TODO: Broken
+		{
+			ts.putback(t);
 			return (double)factorial(number);
+		}
 		else
 			return t.value;								// return the number's value
 	}
