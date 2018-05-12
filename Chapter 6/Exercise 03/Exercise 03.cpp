@@ -1,5 +1,5 @@
 // Jared Mathes
-// 2018-05-08
+// 2018-05-11
 // Chapter 6
 // Exercise 03
 // Add factorial operator (!)
@@ -107,8 +107,8 @@ int factorial(int num)
 {
 	if (num > 0)
 	{
-		int answer{ 1 };
-		for (int i = 1; i < num + 1; ++i)
+		int answer{ num };
+		for (int i = num-1; i > 0; --i)
 		{
 			answer *= i;
 		}
@@ -133,36 +133,38 @@ double expression();
 double primary()
 {
 	Token t = ts.get();
+	double d{ 0 };
 	switch (t.kind) {
 	case '(':										// handle '(' expression ')'
 	{
-		double d = expression();
+		d = expression();
 		t = ts.get();
 		if (t.kind != ')') error("')' expected");
-		return d;
+		break;
 	}
 	case '{':										// handle '{' expression '}'
 	{
-		double d = expression();
+		d = expression();
 		t = ts.get();
 		if (t.kind != '}') error("'}' expected");
-		return d;
+		break;
 	}
 	case '8':										// we use '8' to represent a number
 	{
-		int number = t.value;
-		t = ts.get();
-		if (t.kind = '!')	// TODO: Broken
-		{
-			ts.putback(t);
-			return (double)factorial(number);
-		}
-		else
-			return t.value;								// return the number's value
+		d = t.value;
+		break;
 	}
 	default:
 		error("primary expected");
 	}
+
+	t = ts.get();
+	if (t.kind != '!')
+	{
+		ts.putback(t);
+		return d;
+	}
+	return factorial(d);
 }
 
 //------------------------------------------------------------------------------
