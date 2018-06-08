@@ -73,36 +73,104 @@ string String_stream::get()
 
 String_stream sstr;
 
-bool conjunction()
+bool conjunctn()
 {
-
+	string s = sstr.get();
+	if (s == "and" || s == "or" || s == "but")
+	{
+		return true;
+	} 
+	else
+	{
+		return false;
+	}
 }
 
 bool noun()
 {
-
+	string s = sstr.get();
+	if (s == "birds" || s == "fish" || s == "C++")
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 bool verb()
 {
-
+	string s = sstr.get();
+	if (s == "rules" || s == "fly" || s == "swim")
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 bool subject()
 {
-
+	string s = sstr.get();
+	if (s == "the")     // article before noun, check next string
+		return noun();
+	else {              // no article, put string back and check if noun
+		sstr.putback(s);
+		return noun();
+	}
 }
 
 bool sentence()
 {
-
+	return (subject() && verb());
 }
 
 int main()
 {
-	cout << "Enter in a sentence and I will validate it.\n";
-	cout << "To be valid, the sentence should be terminated with a space followed by a period.\n";
-	cout << "i.e ' .'\n\n";
+	try
+	{
+		bool is_ok = false;
+		while (true)
+		{
+			// check for a valid sentence
+			is_ok = sentence();
+			if (!is_ok)
+			{
+				cout << "Not OK\n";
+				return 0;
+			}
 
-	return 0;
+			// now check for the correct sentence termination sequence
+			string s = sstr.get();
+			if (s == ".")
+			{
+				cout << "OK\n";
+				return 0;
+			}
+			// if it's not terminated, put back what we found and check for a conjunction
+			else
+			{
+				sstr.putback(s);
+				is_ok = conjunctn();
+				if (!is_ok)
+				{
+					cout << "Not OK\n";
+					return 0;
+				}
+			}
+		}
+	}
+	catch (exception& e) {
+		cerr << "error: " << e.what() << '\n';
+		keep_window_open();
+		return 1;
+	}
+	catch (...) {
+		cerr << "Oops: unknown exception!\n";
+		keep_window_open();
+		return 2;
+	}
 }
