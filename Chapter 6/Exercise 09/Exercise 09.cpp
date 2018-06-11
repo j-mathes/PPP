@@ -85,13 +85,12 @@ int main()
 			{
 				for (int i = s.size(); i > 0; --i)
 				{
-					digits.push_back(s[i] - '0');
+					digits.push_back(s[i] - '0');  // problems here
 				}
 
-				// possible range issues if the number has less than 4 digits
-				if (s.size() == 3) thousands = digits[3];
-				if (s.size() >= 2) hundreds = digits[2];
-				if (s.size() >= 1) tens = digits[1];
+				if (s.size() == 4) thousands = digits[3];
+				if (s.size() >= 3) hundreds = digits[2];
+				if (s.size() >= 2) tens = digits[1];
 				ones = digits[0];
 
 				cout << "\n";
