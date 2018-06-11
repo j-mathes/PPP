@@ -61,7 +61,7 @@ int main()
 	{
 		while (true)
 		{
-			cout << "Enter a four digit number.\n";
+			cout << "Enter a number up to four digits long.\n";
 			cout << "> ";
 
 			vector<int> digits;
@@ -89,9 +89,9 @@ int main()
 				}
 
 				// possible range issues if the number has less than 4 digits
-				thousands = digits[3];
-				hundreds = digits[2];
-				tens = digits[1];
+				if (s.size() == 3) thousands = digits[3];
+				if (s.size() >= 2) hundreds = digits[2];
+				if (s.size() >= 1) tens = digits[1];
 				ones = digits[0];
 
 				cout << "\n";
