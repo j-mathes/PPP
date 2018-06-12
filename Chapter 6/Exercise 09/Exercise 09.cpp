@@ -83,9 +83,18 @@ int main()
 			}
 			else
 			{
-				for (int i = s.size(); i > 0; --i)
+				size_t counter = 0;
+				while (counter < 4)
 				{
-					digits.push_back(s[i] - '0');  // problems here
+					if (counter <= (s.size()-1))
+					{
+						digits.push_back(s[s.size() - 1 - counter] - '0');
+					}
+					else
+					{
+						digits.push_back(0);
+					}
+					++counter;
 				}
 
 				if (s.size() == 4) thousands = digits[3];
