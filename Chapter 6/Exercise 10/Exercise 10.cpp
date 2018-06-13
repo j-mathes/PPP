@@ -55,16 +55,85 @@ bool is_digits(const std::string &str) {
 	return str.find_first_not_of("0123456789") == std::string::npos;
 }
 
+//------------------------------------------------------------------------------
+// Given a number, return the factorial
+int factorial(int num)
+{
+	if (num > 0)
+	{
+		int answer{ num };
+		for (int i = num - 1; i > 0; --i)
+		{
+			answer *= i;
+		}
+		return answer;
+	}
+	else
+	{
+		return 1;
+	}
+}
+
+//------------------------------------------------------------------------------
+// Permutation
+int permutation(int a, int b)
+{
+	int answer = factorial(a) / factorial(a - b);
+	return answer;
+}
+//------------------------------------------------------------------------------
+// Combination
+int combination(int a, int b)
+{
+	int answer = permutation(a, b) / factorial(b);
+	return answer;
+}
 int main()
 {
 	try
 	{
 		while (true)
 		{
-			cout << "Enter a number up to four digits long.\n";
+			cout << "\n";
+			cout << "Enter the first integer number.\n";
 			cout << "> ";
 
-			string s = sstr.get();
+			string input_1 = sstr.get();
+			if (!is_digits(input_1)) throw std::invalid_argument("Input needs to be digits");
+			int first_num = std::stoi(input_1);
+
+			cout << "\n";
+			cout << "Enter the second integer number.\n";
+			cout << "> ";
+
+			string input_2 = sstr.get();
+			if (!is_digits(input_2)) throw std::invalid_argument( "Input needs to be digits" );
+			int second_num = std::stoi(input_2);
+
+			cout << "\n";
+			cout << "Enter 'P' for Permutations or 'C' for Combinations.\n";
+			cout << "> ";
+
+			char oper;
+			cin >> oper;
+
+			switch (oper)
+			{
+			case 'P':
+			case 'p':
+				cout << "\n";
+				cout << "The Permutation of " << first_num << " and " << second_num << " is " << permutation(first_num, second_num) << ".\n";
+				break;
+			case 'C':
+			case 'c':
+				cout << "\n";
+				cout << "The Combination of " << first_num << " and " << second_num << " is " << combination(first_num, second_num) << ".\n";
+				break;
+			default:
+				cout << "\n";
+				cout << "Not a valid choice.\n";
+				break;
+			}
 			
 		}
 	}
