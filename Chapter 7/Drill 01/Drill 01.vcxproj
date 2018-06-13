@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{4F64566A-4345-46CF-A27E-40496620F0C1}</ProjectGuid>
-    <RootNamespace>Drill</RootNamespace>
+    <ProjectGuid>{139CCB7F-3741-4BDE-8BBE-6483052EB171}</ProjectGuid>
+    <RootNamespace>Drill01</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -119,7 +119,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Calculator08buggy.cpp" />
+    <ClCompile Include="Drill 01.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
