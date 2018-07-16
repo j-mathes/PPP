@@ -1,15 +1,13 @@
+// Jared Mathes
+// 2018-06-12
+// Chapter 7
+// Exercise 01
+// Simple Calculator
+// Allow Underscores in variable names
+// Debug '%'
+
 
 /*
-calculator08buggy.cpp
-
-Helpful comments removed.
-
-We have inserted 3 bugs that the compiler will catch and 3 that it won't.
-*/
-
-/*
-Simple Calculator
-
 This program implements a basic expression calculator.
 Input from cin; output to cout.
 
@@ -146,7 +144,7 @@ Token Token_stream::get()
 		if (isalpha(ch)) {
 			string s;
 			s += ch;
-			while (cin.get(ch) && (isalpha(ch) || isdigit(ch)))
+			while (cin.get(ch) && ((ch == '_') || isalpha(ch) || isdigit(ch)))	// Added underscores to names
 				s += ch;
 			cin.unget();
 			if (s == "let") return Token(let);
@@ -197,7 +195,8 @@ double get_value(string s)
 void set_value(string s, double d)
 {
 	for (size_t i = 0; i <= names.size(); ++i)
-		if (names[i].name == s) {
+		if (names[i].name == s) 
+		{
 			names[i].value = d;
 			return;
 		}
@@ -303,12 +302,12 @@ double term()
 			break;
 		}
 		case '%':
-		{        
+		{
 			int i1 = narrow_cast<int>(left);
 			int i2 = narrow_cast<int>(primary());
 			if (i2 == 0) error("%: divide by zero");
 			left = i1 % i2;
-			t = ts.get();
+			//t = ts.get(); // This was included in error
 			break;
 		}
 		default:
