@@ -3,9 +3,7 @@
 // Chapter 7
 // Exercise 01
 // Simple Calculator
-// Allow Underscores in variable names
-// Debug '%'
-
+// Allow '=' assignment operator
 
 /*
 This program implements a basic expression calculator.
@@ -195,7 +193,7 @@ double get_value(string s)
 void set_value(string s, double d)
 {
 	for (size_t i = 0; i <= names.size(); ++i)
-		if (names[i].name == s) 
+		if (names[i].name == s)
 		{
 			names[i].value = d;
 			return;
@@ -277,7 +275,20 @@ double primary()
 		return powerup();
 	}
 	case name:
-		return get_value(t.name);
+	{
+		Token next = ts.get();
+		if (next.kind == '=')
+		{
+			double d = expression();
+			set_value(t.name, d);
+			return d;
+		}
+		else
+		{
+			ts.unget(next);
+			return get_value(t.name);
+		}
+	}
 	default:
 		error("primary expected");
 		return 0.0;
@@ -307,7 +318,6 @@ double term()
 			int i2 = narrow_cast<int>(primary());
 			if (i2 == 0) error("%: divide by zero");
 			left = i1 % i2;
-			//t = ts.get(); // This was included in error
 			break;
 		}
 		default:
