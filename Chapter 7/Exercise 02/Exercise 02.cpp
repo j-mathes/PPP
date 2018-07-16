@@ -1,7 +1,7 @@
 // Jared Mathes
 // 2018-07-15
 // Chapter 7
-// Exercise 01
+// Exercise 02
 // Simple Calculator
 // Allow '=' assignment operator
 
