@@ -140,11 +140,22 @@ Token Token_stream::get()
 {
 	if (full)
 	{
-		full = false; return buffer;
+		full = false; 
+		return buffer;
 	}
 
 	char ch;
-	cin >> ch;	// note that >> skips whitespace (space, newline, tab, etc.)
+	//cin >> ch;	// note that >> skips whitespace (space, newline, tab, etc.)
+	cin.get(ch);	// note that cin.get() does NOT skip whitespace
+
+	while (isspace(ch))
+	{
+		if (ch == '\n')
+		{
+			return Token(print);
+		}
+		cin.get(ch);
+	}
 
 	switch (ch) {
 	case quit:
@@ -180,11 +191,6 @@ Token Token_stream::get()
 	}
 
 	default:
-		if (isspace(ch))
-		{
-			if (ch == '\n')
-				return Token(print);
-		}
 		if (isalpha(ch)) 
 		{
 			string s;
