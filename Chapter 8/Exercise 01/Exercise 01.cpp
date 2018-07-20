@@ -3,7 +3,7 @@
 // Chapter 8
 // Exercise 01
 // Simple Calculator
-// 
+// Make input stream a parameter
 //
 //This program implements a basic expression calculator.
 //Input from cin; output to cout.
@@ -108,10 +108,10 @@ public:
 // This is a token stream, with buffer being the lookahead character
 // if full is true.  buffer is initialized more cleanly.  See
 // below for the methods.
-//
 class Token_stream {
 public:
 	Token_stream();
+	Token_stream(istream&);	// added istream reference parameter for future use
 	Token get();
 	void putback(Token t);
 	void ignore(char);
@@ -234,10 +234,6 @@ void Token_stream::ignore(char c)
 }
 
 //------------------------------------------------------------------------------
-// The token stream.
-Token_stream ts;
-
-//------------------------------------------------------------------------------
 //  This is a named variable.
 class Variable {
 public:
@@ -246,10 +242,6 @@ public:
 	bool var;		// variable (true), constant (false)
 	Variable(string n, double v, bool va = true) :name(n), value(v), var(va) { }
 };
-
-//------------------------------------------------------------------------------
-// The vector of all active variables.
-// vector<Variable> var_table;
 
 //------------------------------------------------------------------------------
 // Symbol Table Class
@@ -310,18 +302,18 @@ Symbol_table st;
 
 //------------------------------------------------------------------------------
 // declaration so that primary() can call expression()
-double expression();
+double expression(Token_stream& ts);
 
 //------------------------------------------------------------------------------
 // Power function
-double powerup()
+double powerup(Token_stream& ts)
 {
 	Token t = ts.get();
 	if (t.kind != '(') error("'(' expected");
-	double x = expression();
+	double x = expression(ts);
 	t = ts.get();
 	if (t.kind != ',') error("',' expected");
-	double y = expression();
+	double y = expression(ts);
 	int n = int(y);
 	if (n != y) error("non-integral powers not supported");
 	t = ts.get();
@@ -346,19 +338,19 @@ double powerup()
 
 //------------------------------------------------------------------------------
 // Read a primary (value, operator, etc. or a compound expression)
-double primary()
+double primary(Token_stream& ts)
 {
 	Token t = ts.get();
 	switch (t.kind) {
 	case '(':
 	{
-		double d = expression();
+		double d = expression(ts);
 		t = ts.get();
 		if (t.kind != ')') error("')' expected");
 		return d;	// this was missing
 	}
 	case '-':
-		return -primary();
+		return -primary(ts);
 	case number:
 		return t.value;
 	case squrt:
@@ -366,20 +358,20 @@ double primary()
 		t = ts.get();
 		if (t.kind != '(') error("'(' expected");
 		ts.putback(t);
-		double x = primary();
+		double x = primary(ts);
 		if (x < 0.0) error("Square root of a negative number");
 		return sqrt(x);
 	}
 	case pw:
 	{
-		return powerup();
+		return powerup(ts);
 	}
 	case name:
 	{
 		Token next = ts.get();
 		if (next.kind == '=')
 		{
-			double d = expression();
+			double d = expression(ts);
 			st.set_value(t.name, d);
 			return d;
 		}
@@ -397,18 +389,18 @@ double primary()
 
 //------------------------------------------------------------------------------
 // Read a multiplicative expression.
-double term()
+double term(Token_stream& ts)
 {
-	double left = primary();
+	double left = primary(ts);
 	while (true) {
 		Token t = ts.get();
 		switch (t.kind) {
 		case '*':
-			left *= primary();
+			left *= primary(ts);
 			break;
 		case '/':
 		{
-			double d = primary();
+			double d = primary(ts);
 			if (d == 0) error("divide by zero");
 			left /= d;
 			break;
@@ -416,7 +408,7 @@ double term()
 		case '%':
 		{
 			int i1 = narrow_cast<int>(left);
-			int i2 = narrow_cast<int>(primary());
+			int i2 = narrow_cast<int>(primary(ts));
 			if (i2 == 0) error("%: divide by zero");
 			left = i1 % i2;
 			break;
@@ -430,17 +422,17 @@ double term()
 
 //------------------------------------------------------------------------------
 // Read an additive expression.
-double expression()
+double expression(Token_stream& ts)
 {
-	double left = term();
+	double left = term(ts);
 	while (true) {
 		Token t = ts.get();
 		switch (t.kind) {
 		case '+':
-			left += term();
+			left += term(ts);
 			break;
 		case '-':
-			left -= term();
+			left -= term(ts);
 			break;
 		default:
 			ts.putback(t);
@@ -451,7 +443,7 @@ double expression()
 
 //------------------------------------------------------------------------------
 // Read a variable declaration.
-double declaration(Token k)
+double declaration(Token_stream& ts, char kind)
 {
 	Token t = ts.get();
 	if (t.kind != name) error("name expected in declaration");
@@ -460,29 +452,30 @@ double declaration(Token k)
 	Token t2 = ts.get();
 	if (t2.kind != '=') error("= missing in declaration of ", var_name);
 
-	double d = expression();
-	st.define_name(var_name, d, k.kind == let);
+	double d = expression(ts);
+	st.define_name(var_name, d, kind == let);
 	return d;
 }
 
 //------------------------------------------------------------------------------
 // Read a statement.
-double statement()
+double statement(Token_stream& ts)
 {
 	Token t = ts.get();
-	switch (t.kind) {
+	char kind = t.kind;
+	switch (kind) {
 	case let:
 	case con:
-		return declaration(t.kind);
+		return declaration(ts, kind);
 	default:
 		ts.putback(t);
-		return expression();
+		return expression(ts);
 	}
 }
 
 //------------------------------------------------------------------------------
 // Skip to the next print character.
-void clean_up_mess()
+void clean_up_mess(Token_stream& ts)
 {
 	ts.ignore(print);
 }
@@ -507,6 +500,7 @@ void help_instructions()
 // The main calculation loop.
 void calculate()
 {
+	Token_stream ts;
 	while (cin)
 		try
 	{
@@ -521,12 +515,12 @@ void calculate()
 			while (t.kind == print) t = ts.get();
 			if (t.kind == quit) return;
 			ts.putback(t);
-			cout << result << statement() << endl;
+			cout << result << statement(ts) << endl;
 		}
 	}
 	catch (runtime_error& e) {
 		cerr << e.what() << endl;
-		clean_up_mess();
+		clean_up_mess(ts);
 	}
 }
 
