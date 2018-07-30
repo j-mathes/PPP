@@ -6,7 +6,7 @@
 
 #include "../../std_lib_facilities.h"
 
-int number_of_chars_in_each(vector<string> v)
+int number_of_chars_in_each(const vector<string>& v)
 {
 	int total = 0;
 	for (string s : v)
@@ -16,7 +16,7 @@ int number_of_chars_in_each(vector<string> v)
 	return total;
 }
 
-string shortest_string(vector<string> v)
+string shortest_string(const vector<string>& v)
 {
 	string result = v[0];
 	for (string s : v)
@@ -28,7 +28,7 @@ string shortest_string(vector<string> v)
 	return result;
 }
 
-string longest_string(vector<string> v)
+string longest_string(const vector<string>& v)
 {
 	string result = v[0];
 	for (string s : v)
@@ -40,7 +40,7 @@ string longest_string(vector<string> v)
 	return result;
 }
 
-string lex_first_string(vector<string> v)
+string lex_first_string(const vector<string>& v)
 {
 	string result = v[0];
 	for (string s : v)
@@ -52,7 +52,7 @@ string lex_first_string(vector<string> v)
 	return result;
 }
 
-string lex_last_string(vector<string> v)
+string lex_last_string(const vector<string>& v)
 {
 	string result;
 	for (string s : v)
