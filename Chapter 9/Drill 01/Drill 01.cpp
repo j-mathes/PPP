@@ -18,16 +18,17 @@ struct Date {
 void init_day(Date& dd, int y, int m, int d)
 {
 	// check that (y,m,d) is a valid date
-	if (y > 1600 || y < 2050 || m > 0 || m < 13 || d > 0 || d < 31)
+	if (y < 1600 || y > 2050 || m < 0 || m > 13 || d < 0 || d > 31)
+	{
+		error("Invalid date");
+	}
+	else
 	{
 		dd.y = y;
 		dd.m = m;
 		dd.d = d;
 	}
-	else
-	{
-		error("Invalid date");
-	}
+	
 	// if it is, use it to initialize dd
 	return;
 }
@@ -88,7 +89,7 @@ int main()
 try
 {
 	Date today;
-	init_day(today, 1978, 6, 25 );
+	init_day(today, 1978, 6, -25 );
 
 	Date tomorrow = today;
 	add_day(tomorrow, 1);
