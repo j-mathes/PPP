@@ -73,6 +73,23 @@ void Date::add_day(int n)
 	}
 }
 
+static ostream & operator<< (ostream & os, const Month & m) {
+	switch (m) {
+	case Month::jan: os << "January"; break;
+	case Month::feb: os << "February"; break;
+	case Month::mar: os << "March"; break;
+	case Month::apr: os << "April"; break;
+	case Month::may: os << "May"; break;
+	case Month::jun: os << "June"; break;
+	case Month::jul: os << "July"; break;
+	case Month::aug: os << "August"; break;
+	case Month::sep: os << "September"; break;
+	case Month::oct: os << "October"; break;
+	case Month::nov: os << "November"; break;
+	case Month::dec: os << "December"; break;
+	}
+	return os;
+}
 
 ostream& operator<<(ostream& os, Date& d)
 {
@@ -81,29 +98,10 @@ ostream& operator<<(ostream& os, Date& d)
 		<< ',' << d.day() << ')';
 }
 
-istream& operator>>(istream& is, Date& dd)
-{
-	int y, d;
-	Month m;
-	char ch1, ch2, ch3, ch4;
-
-	is >> ch1 >> y >> ch2 >> m >> ch3 >> d >> ch4;
-	if (!is) return is;
-	if (ch1 != '(' || ch2 != ',' || ch3 != ',' || ch4 != ')') {	// oops: format error
-		is.clear(ios_base::failbit);                            // set the fail bit
-		return is;
-	}
-
-	Date new_date(y, m, d);
-	dd = new_date;
-
-	return is;
-}
-
 int main()
 try
 {
-	Date today(1978, Month::jun, 25);
+	Date today(1978, Month::jun, -25);
 
 	Date tomorrow = today;
 	tomorrow.add_day(1);
