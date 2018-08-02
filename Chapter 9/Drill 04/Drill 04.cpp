@@ -17,7 +17,6 @@ class Date {
 
 public:
 	Date(int y, Month m, int d);	// check for valid date and initialize
-	Date();							// Default Constructor
 	void add_day(int n);			// increase the Date by n days
 	
 	int year() const { return y; }
@@ -72,9 +71,6 @@ void Date::add_day(int n)
 	{
 		m = (Month)temp_months;
 	}
-
-	// This should really call a recursion function in case the number of days exceeds a month's worth.
-	// Simple for now.
 }
 
 
