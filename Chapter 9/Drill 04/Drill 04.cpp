@@ -5,6 +5,7 @@
 // Date Function
 // 9.7.1 version
 // https://github.com/0p3r4t4/PPPUCPP2nd/blob/master/ch09/9.drill.04.cpp for an alternate implementation
+// http://people.ds.cam.ac.uk/nmm1/C++/Exercises/Chapter_09/dr_04.cpp
 
 #include "../../std_lib_facilities.h"
 
