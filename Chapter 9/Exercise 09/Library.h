@@ -9,6 +9,7 @@
 #include "../../std_lib_facilities.h"
 #include "Book.h"
 #include "Patron.h"
+#include "Date.h"
 
 // Need to build constructor for library class
 class Library
@@ -21,12 +22,12 @@ public:
 		Date date;
 
 		Transaction(Book b, Patron p, Date d);
-		Transaction();
 	};
 
-	void add_book(Book);
-	void add_patron(Patron);
-	void check_out_book(Book, Patron);
+	void add_book(const Book&);
+	void add_patron(const Patron&);
+	void check_out_book(Book&, const Patron&, const Date&);
+	vector <Patron> patrons_who_owe_fees() const;
 
 private:
 	vector <Book> m_book;

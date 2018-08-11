@@ -69,13 +69,3 @@ ostream& operator<<(ostream& os, Book& b)
 		<< "Genre: " << b.genre() << endl
 		<< "ISBN: " << b.ISBN() << endl;
 }
-
-bool operator!=(const Book& a, const Book& b)
-{
-	return (a.ISBN() != b.ISBN());
-}
-
-bool operator==(const Book& a, const Book& b)
-{
-	return (a.ISBN() == b.ISBN());
-}

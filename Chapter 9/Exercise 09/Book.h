@@ -5,7 +5,7 @@
 // Library project
 // Book.h
 
-#pragma  once
+#pragma once
 #include"Date.h"
 #include "../../std_lib_facilities.h"
 

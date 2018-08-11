@@ -5,6 +5,7 @@
 // Library project
 // Patron.cpp
 
+#pragma once
 #include "Patron.h"
 
 // Patron constructor
