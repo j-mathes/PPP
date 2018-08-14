@@ -12,7 +12,7 @@ void skip_to_int()
 	{												// we found something that wasn't an integer
 		cin.clear();								// set the state back to good();
 													// we want to look at the characters	
-		for (char ch; cin >> ch; )	// throw away non-digits
+		for (char ch; cin >> ch; )					// throw away non-digits
 		{
 			if (isdigit(ch) || ch=='-')
 			{
