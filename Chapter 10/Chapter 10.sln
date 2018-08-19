@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Work", "Work\Work.vcxproj", "{2BDAC556-541A-4507-9468-5573DDC3B703}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Drill 01", "Drill 01\Drill 01.vcxproj", "{6ECF7B12-24EA-4ACC-B536-F305521DF01B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{2BDAC556-541A-4507-9468-5573DDC3B703}.Release|x64.Build.0 = Release|x64
 		{2BDAC556-541A-4507-9468-5573DDC3B703}.Release|x86.ActiveCfg = Release|Win32
 		{2BDAC556-541A-4507-9468-5573DDC3B703}.Release|x86.Build.0 = Release|Win32
+		{6ECF7B12-24EA-4ACC-B536-F305521DF01B}.Debug|x64.ActiveCfg = Debug|x64
+		{6ECF7B12-24EA-4ACC-B536-F305521DF01B}.Debug|x64.Build.0 = Debug|x64
+		{6ECF7B12-24EA-4ACC-B536-F305521DF01B}.Debug|x86.ActiveCfg = Debug|Win32
+		{6ECF7B12-24EA-4ACC-B536-F305521DF01B}.Debug|x86.Build.0 = Debug|Win32
+		{6ECF7B12-24EA-4ACC-B536-F305521DF01B}.Release|x64.ActiveCfg = Release|x64
+		{6ECF7B12-24EA-4ACC-B536-F305521DF01B}.Release|x64.Build.0 = Release|x64
+		{6ECF7B12-24EA-4ACC-B536-F305521DF01B}.Release|x86.ActiveCfg = Release|Win32
+		{6ECF7B12-24EA-4ACC-B536-F305521DF01B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
