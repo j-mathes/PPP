@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Drill 03", "Drill 03\Drill 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Drill 04", "Drill 04\Drill 04.vcxproj", "{9E0D34D8-970D-4C71-B0F2-D1D6D8C7DFDD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Drill 05", "Drill 05\Drill 05.vcxproj", "{E6F23999-3827-4758-B57F-307C9ED65CF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{9E0D34D8-970D-4C71-B0F2-D1D6D8C7DFDD}.Release|x64.Build.0 = Release|x64
 		{9E0D34D8-970D-4C71-B0F2-D1D6D8C7DFDD}.Release|x86.ActiveCfg = Release|Win32
 		{9E0D34D8-970D-4C71-B0F2-D1D6D8C7DFDD}.Release|x86.Build.0 = Release|Win32
+		{E6F23999-3827-4758-B57F-307C9ED65CF1}.Debug|x64.ActiveCfg = Debug|x64
+		{E6F23999-3827-4758-B57F-307C9ED65CF1}.Debug|x64.Build.0 = Debug|x64
+		{E6F23999-3827-4758-B57F-307C9ED65CF1}.Debug|x86.ActiveCfg = Debug|Win32
+		{E6F23999-3827-4758-B57F-307C9ED65CF1}.Debug|x86.Build.0 = Debug|Win32
+		{E6F23999-3827-4758-B57F-307C9ED65CF1}.Release|x64.ActiveCfg = Release|x64
+		{E6F23999-3827-4758-B57F-307C9ED65CF1}.Release|x64.Build.0 = Release|x64
+		{E6F23999-3827-4758-B57F-307C9ED65CF1}.Release|x86.ActiveCfg = Release|Win32
+		{E6F23999-3827-4758-B57F-307C9ED65CF1}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
