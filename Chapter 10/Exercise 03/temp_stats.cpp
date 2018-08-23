@@ -26,11 +26,9 @@ istream& operator>>(istream& is, Reading& r)
 	is >> new_hour >> new_temperature;
 	if (is.eof()) 
 		return is;
-	else
-		error("bad reading");
-
 	r.hour = new_hour;
 	r.temperature = new_temperature;
+	return is;
 }
 
 void read_readings(vector<Reading>& vector_of_readings, const string& filename)
@@ -49,20 +47,23 @@ void read_readings(vector<Reading>& vector_of_readings, const string& filename)
 double calculate_mean_temp(const vector<Reading>& temperature_readings)
 {
 	// calculate mean temperatures
-	int counter{ 0 };
-	double total_temperatures;
-	for (auto const& value : temperature_readings)
+	double total_temperatures{ 0 };
+	for (Reading value : temperature_readings)
 	{
 		total_temperatures += value.temperature;
-		++counter;
 	}
-	return total_temperatures / (double)counter;
+	return total_temperatures / temperature_readings.size();
 }
 
 double calculate_median_temp(const vector<Reading>& temperature_readings)
 {
 	// calculate median temperatures
-	size_t size = temperature_readings.size();
+	vector<double> temperature_values;
+	for (Reading r: temperature_readings)
+	{
+		temperature_values.push_back(r.temperature);
+	}
+	int size = temperature_values.size();
 
 	if (size == 0)
 	{
@@ -70,14 +71,14 @@ double calculate_median_temp(const vector<Reading>& temperature_readings)
 	}
 	else
 	{
-		sort(temperature_readings.begin(), temperature_readings.end());
+		sort(temperature_values.begin(), temperature_values.end());
 		if (size % 2 == 0)
 		{
-			return (temperature_readings[size / 2 - 1].temperature + temperature_readings[size / 2].temperature) / 2;
+			return (temperature_values[size / 2 - 1] + temperature_values[size / 2]) / 2;
 		}
 		else
 		{
-			return temperature_readings[size / 2].temperature;
+			return temperature_values[size / 2];
 		}
 	}
 }
