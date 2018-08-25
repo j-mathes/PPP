@@ -18,5 +18,13 @@
     <ClCompile Include="Exercise 07.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Roman.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Roman.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -117,6 +117,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Exercise 07.cpp" />
+    <ClCompile Include="Roman.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Roman.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

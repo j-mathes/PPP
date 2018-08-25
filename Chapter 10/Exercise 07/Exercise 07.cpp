@@ -58,7 +58,7 @@
 //	+ Primary
 //
 //Number:
-//	floating-point-literal
+//	roman-numeral-literal
 //
 //Name:
 //	[a-zA-Z][a-zA-Z_0-9]*	// a letter followed by zero or more letters, underscores, and digits
@@ -69,11 +69,12 @@
 //
 //Defining Names:
 //	let (name) =
-//	cont (name = 
+//	cont (name) = 
 //	Defines a name that can be used as a substitute.  'let' must be lower case.
 //
 
 #include "../../std_lib_facilities.h"
+#include "Roman.h"
 
 //------------------------------------------------------------------------------
 // Definitions for Token kind codes.
@@ -98,10 +99,12 @@ const string result = "= ";
 class Token {
 public:
 	char kind;
-	int value;
+	//int value;
+	Roman::Roman_int value;
 	string name;
-	Token(char ch) :kind(ch), value(0) { }					// initialize kind with ch
-	Token(char ch, int val) :kind(ch), value(val) { }	// initialize kind and value
+	Token(char ch) :kind(ch) { }							// initialize kind with ch
+	//Token(char ch, int val) :kind(ch), value(val) { }		// initialize kind and value
+	Token(char ch, Roman::Roman_int val) :kind(ch), value(val) { }		// initialize kind and value
 	Token(char ch, string n) :kind{ ch }, name{ n } { }		// initialize kind and name
 };
 
@@ -109,7 +112,6 @@ public:
 // This is a token stream, with buffer being the lookahead character
 // if full is true.  buffer is initialized more cleanly.  See
 // below for the methods.
-//
 class Token_stream {
 public:
 	Token_stream();
@@ -180,19 +182,28 @@ Token Token_stream::get()
 	case 'H':
 		return Token(help);
 		//case '.':
-	case '0':
-	case '1':
-	case '2':
-	case '3':
-	case '4':
-	case '5':
-	case '6':
-	case '7':
-	case '8':
-	case '9':
+	//case '0':
+	//case '1':
+	//case '2':
+	//case '3':
+	//case '4':
+	//case '5':
+	//case '6':
+	//case '7':
+	//case '8':
+	//case '9':
+
+	case 'M':
+	case 'D':
+	case 'C':
+	case 'L':
+	case 'X':
+	case 'V':
+	case 'I':
 	{
 		cin.putback(ch);
-		int val;
+		//int val;
+		Roman::Roman_int val;
 		cin >> val;
 		return Token(number, val);
 	}
@@ -243,39 +254,43 @@ Token_stream ts;
 class Variable {
 public:
 	string name;
-	int value;
+	//int value;
+	Roman::Roman_int value;
 	bool var;		// variable (true), constant (false)
-	Variable(string n, int v, bool va = true) :name(n), value(v), var(va) { }
+	//Variable(string n, int v, bool va = true) :name(n), value(v), var(va) { }
+	Variable(string n, Roman::Roman_int v, bool va = true) :name(n), value(v), var(va) { }
 };
-
-//------------------------------------------------------------------------------
-// The vector of all active variables.
-// vector<Variable> var_table;
 
 //------------------------------------------------------------------------------
 // Symbol Table Class
 class Symbol_table {
 public:
 	vector<Variable> var_table;
-	int get_value(string);
-	void set_value(string, int);
+	//int get_value(string);
+	Roman::Roman_int get_value(string);
+	//void set_value(string, int);
+	void set_value(string, Roman::Roman_int);
 	bool is_declared(string);
-	int define_name(string, int, bool);
+	//int define_name(string, int, bool);
+	void define_name(string, Roman::Roman_int, bool);
+
+	//void print();
 };
 
 //------------------------------------------------------------------------------
 //  Get the value of a variable, or fail if no match.
-int Symbol_table::get_value(string s)
+//int Symbol_table::get_value(string s)
+Roman::Roman_int Symbol_table::get_value(string s)
 {
 	for (size_t i = 0; i < var_table.size(); ++i)
 		if (var_table[i].name == s) return var_table[i].value;
 	error("get: undefined name ", s);
-	return 0;
 }
 
 //------------------------------------------------------------------------------
 //  Set the value of a variable, or fail if no match.
-void Symbol_table::set_value(string s, int d)
+//void Symbol_table::set_value(string s, int d)
+void Symbol_table::set_value(string s, Roman::Roman_int d)
 {
 	for (size_t i = 0; i <= var_table.size(); ++i)
 		if (var_table[i].name == s)
@@ -298,11 +313,12 @@ bool Symbol_table::is_declared(string s)
 
 //------------------------------------------------------------------------------
 // Add (s,val,var) to var_table
-int Symbol_table::define_name(string s, int val, bool var = true)
+//int Symbol_table::define_name(string s, int val, bool var = true)
+void Symbol_table::define_name(string s, Roman::Roman_int val, bool var = true)
 {
 	if (is_declared(s)) error(s, " declared twice");
 	var_table.push_back(Variable(s, val, var));
-	return val;
+	//return val;
 }
 
 //------------------------------------------------------------------------------
@@ -311,97 +327,142 @@ Symbol_table st;
 
 //------------------------------------------------------------------------------
 // declaration so that primary() can call expression()
-int expression();
+//int expression();
+Roman::Roman_int expression();
 
 //------------------------------------------------------------------------------
-// Power function
-int powerup()
+// Evaluate function of kind c.  The next on input must be "("Expression")"
+Roman::Roman_int eval_function(char c)
 {
+	vector<Roman::Roman_int> args;    // Vector to store (variable number) of function 
+							// arguments.
 	Token t = ts.get();
-	if (t.kind != '(') error("'(' expected");
-	int x = expression();
-	t = ts.get();
-	if (t.kind != ',') error("',' expected");
-	int y = expression();
-	int n = int(y);
-	if (n != y) error("non-integral powers not supported");
-	t = ts.get();
-	if (t.kind != ')') error("')' expected");
-	y = 1;
-	if (n < 0)
-	{
-		for (int i = 0; i < n; ++i)
-		{
-			y /= x;
-		}
+	if (t.kind != '(') error("'(' expected after function call");
+
+	// Handle argument list. Default: no arguments, do nothing, thus, no
+	// default on switch statement.
+	switch (c) {
+	case squrt:
+		args.push_back(expression());
+		break;
+	case pw:
+		args.push_back(expression());
+		t = ts.get();
+		if (t.kind != ',') error("Bad number of function arguments");
+		args.push_back(expression());
+		break;
 	}
-	else
-	{
-		for (int i = 0; i < n; ++i)
-		{
-			y *= x;
-		}
+
+	t = ts.get();
+	if (t.kind != ')') error("Bad number of function arguments");
+
+	// Evaluation and restrictions implementation
+	switch (c) {
+	case squrt:
+		return Roman::Roman_int(narrow_cast<int>(sqrt(args[0].as_int())));
+	case pw:
+		return Roman::Roman_int(pow(args[0].as_int(), args[1].as_int()));
+	default:
+		// In case we have defined the name as a token for Function rule but
+		// forgot to implement its evaluation
+		error("Function not implemented");
 	}
-	return y;
 }
 
 //------------------------------------------------------------------------------
+// Power function
+//int powerup()
+//{
+//	Token t = ts.get();
+//	if (t.kind != '(') error("'(' expected");
+//	int x = expression();
+//	t = ts.get();
+//	if (t.kind != ',') error("',' expected");
+//	int y = expression();
+//	int n = int(y);
+//	if (n != y) error("non-integral powers not supported");
+//	t = ts.get();
+//	if (t.kind != ')') error("')' expected");
+//	y = 1;
+//	if (n < 0)
+//	{
+//		for (int i = 0; i < n; ++i)
+//		{
+//			y /= x;
+//		}
+//	}
+//	else
+//	{
+//		for (int i = 0; i < n; ++i)
+//		{
+//			y *= x;
+//		}
+//	}
+//	return y;
+//}
+
+//------------------------------------------------------------------------------
 // Read a primary (value, operator, etc. or a compound expression)
-int primary()
+//int primary()
+Roman::Roman_int primary()
 {
 	Token t = ts.get();
 	switch (t.kind) {
 	case '(':
 	{
-		int d = expression();
+		//int d = expression();
+		Roman::Roman_int d = expression();
 		t = ts.get();
 		if (t.kind != ')') error("')' expected");
-		return d;	// this was missing
+		return d;
 	}
-	case '-':
-		return -primary();
+	//case '-':
+	//	return -primary();
 	case number:
 		return t.value;
 	case squrt:
-	{
-		t = ts.get();
-		if (t.kind != '(') error("'(' expected");
-		ts.putback(t);
-		int x = primary();
-		if (x < 0) error("Square root of a negative number");
-		int y = narrow_cast<int>(sqrt(x));
-		return y;
-	}
+	//{
+	//	t = ts.get();
+	//	if (t.kind != '(') error("'(' expected");
+	//	ts.putback(t);
+	//	int x = primary();
+	//	if (x < 0) error("Square root of a negative number");
+	//	int y = narrow_cast<int>(sqrt(x));
+	//	return y;
+	//}
 	case pw:
-	{
-		return powerup();
-	}
+	//{
+	//	return powerup();
+	//}
+		return eval_function(t.kind);
 	case name:
-	{
-		Token next = ts.get();
-		if (next.kind == '=')
-		{
-			int d = expression();
-			st.set_value(t.name, d);
-			return d;
-		}
-		else
-		{
-			ts.putback(next);
-			return st.get_value(t.name);
-		}
-	}
+	//{
+	//	Token next = ts.get();
+	//	if (next.kind == '=')
+	//	{
+	//		int d = expression();
+	//		st.set_value(t.name, d);
+	//		return d;
+	//	}
+	//	else
+	//	{
+	//		ts.putback(next);
+	//		return st.get_value(t.name);
+	//	}
+	//}
+		return st.get_value(t.name);
 	default:
 		error("primary expected");
-		return 0;
 	}
 }
 
 //------------------------------------------------------------------------------
 // Read a multiplicative expression.
-int term()
+//int term()
+Roman::Roman_int term()
 {
-	int left = primary();
+	//int left = primary();
+	Roman::Roman_int left = primary();
 	while (true) {
 		Token t = ts.get();
 		switch (t.kind) {
@@ -410,19 +471,22 @@ int term()
 			break;
 		case '/':
 		{
-			int d = primary();
-			if (d == 0) error("divide by zero");
+			//int d = primary();
+			Roman::Roman_int d = primary();
+			//if (d == 0) error("divide by zero");
 			left /= d;
-			int left_int = int(left);
-			if (left_int != left) error("division led to non-integer value");
+			//int left_int = int(left);
+			//if (left_int != left) error("division led to non-integer value");
 			break;
 		}
 		case '%':
 		{
-			int i1 = narrow_cast<int>(left);
-			int i2 = narrow_cast<int>(primary());
-			if (i2 == 0) error("%: divide by zero");
-			left = i1 % i2;
+			Roman::Roman_int d = primary();
+			left %= d;
+			//int i1 = narrow_cast<int>(left);
+			//int i2 = narrow_cast<int>(primary());
+			//if (i2 == 0) error("%: divide by zero");
+			//left = i1 % i2;
 			break;
 		}
 		default:
@@ -434,9 +498,11 @@ int term()
 
 //------------------------------------------------------------------------------
 // Read an additive expression.
-int expression()
+//int expression()
+Roman::Roman_int expression()
 {
-	int left = term();
+	//int left = term();
+	Roman::Roman_int left = term();
 	while (true) {
 		Token t = ts.get();
 		switch (t.kind) {
@@ -455,7 +521,8 @@ int expression()
 
 //------------------------------------------------------------------------------
 // Read a variable declaration.
-int declaration(Token k)
+//int declaration(Token k)
+Roman::Roman_int declaration(Token k)
 {
 	Token t = ts.get();
 	if (t.kind != name) error("name expected in declaration");
@@ -464,14 +531,16 @@ int declaration(Token k)
 	Token t2 = ts.get();
 	if (t2.kind != '=') error("= missing in declaration of ", var_name);
 
-	int d = expression();
+	//int d = expression();
+	Roman::Roman_int d = expression();
 	st.define_name(var_name, d, k.kind == let);
 	return d;
 }
 
 //------------------------------------------------------------------------------
 // Read a statement.
-int statement()
+//int statement()
+Roman::Roman_int statement()
 {
 	Token t = ts.get();
 	switch (t.kind) {
@@ -496,7 +565,7 @@ void clean_up_mess()
 void help_instructions()
 {
 	cout << "********************************" << endl;
-	cout << "*      SIMPLE CALCULATOR       *" << endl;
+	cout << "*       ROMAN CALCULATOR       *" << endl;
 	cout << "********************************" << endl << endl;
 	cout << "H or h or help     - This menu." << endl;
 	cout << "Q or quit or exit - Quit the program." << endl;
@@ -528,6 +597,12 @@ void calculate()
 			cout << result << statement() << endl;
 		}
 	}
+	catch (Roman::Not_roman& e)
+	{
+		cerr << "Result out of bounds of Roman Numeral representation" << endl;
+		clean_up_mess();
+	}
+
 	catch (runtime_error& e) {
 		cerr << e.what() << endl;
 		clean_up_mess();
