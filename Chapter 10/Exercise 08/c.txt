@@ -1,0 +1,10 @@
+This is text file 1.
+
+There is some text here.
+
+Happy, happy, joy, joy.
+This is text file 2.
+
+There is some more text here.
+
+Happier, happier, joyful, joyful.
