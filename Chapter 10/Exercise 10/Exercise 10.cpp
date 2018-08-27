@@ -4,6 +4,7 @@
 // Exercise 10
 // Simple Calculator
 // Add reading from and writing to a file
+// http://people.ds.cam.ac.uk/nmm1/C++/Exercises/Chapter_10/ex_10.cpp
 
 //
 //This program implements a basic expression calculator.
@@ -88,10 +89,23 @@ const string declkey = "let";		// declaration keyword
 const string constkey = "const";	// const keyword
 const char squrt = 'S';
 const char pw = 'P';
+const char from_file = 'F';
+const char to_file = 'T';
 
 //Mnemonics for output strings.
 const string prompt = "> ";
 const string result = "= ";
+
+// Flag to determine if we are outputting to a file
+bool output_to_file = false;
+ofstream output;
+
+// depending on where output is going, send to cerr or the ofstream
+void diagnose(const string & arg) 
+{
+	if (output_to_file) output << arg << endl;
+	cerr << arg << endl;
+}
 
 //------------------------------------------------------------------------------
 // Token class definition
@@ -116,15 +130,24 @@ public:
 	Token get();
 	void putback(Token t);
 	void ignore(char);
+	string readname();
+	void openfile(const string& arg);
+	void closefile();
+	bool primary() { return using_cin; }
+	const string& where() { return filename; }
+
 private:
 	bool full;
 	Token buffer;
+	bool using_cin;
+	ifstream file;
+	string filename;
 };
 
 //------------------------------------------------------------------------------
 // The constructor just sets full to indicate that the buffer is empty:
 Token_stream::Token_stream()
-	:full(false), buffer(0)    // no Token in buffer
+	:full(false), buffer(0), using_cin(true), filename("<cin>")    // no Token in buffer
 {
 }
 
@@ -135,6 +158,29 @@ void Token_stream::putback(Token t)
 	if (full) error("putback() into a full buffer");
 	buffer = t;       // copy t to buffer
 	full = true;      // buffer is now full
+}
+
+string Token_stream::readname() {
+	if (!using_cin) error("Nested file access is not allowed");
+	string x;
+	cin >> x;    // This is a bit nasty ....
+	if (!cin) error("Bad filename");
+	return x;
+}
+
+void Token_stream::openfile(const string & arg) {
+	if (!using_cin) error("Nested file reading is not allowed");
+	file.open(arg.c_str());
+	if (!file) error("Unable to open file");
+	using_cin = false;
+	filename = arg;
+}
+
+void Token_stream::closefile() {
+	if (using_cin) error("No file is currently open");
+	file.close();  // Error checking on close is tricky in C++
+	using_cin = true;
+	filename = "<cin>";
 }
 
 //------------------------------------------------------------------------------
@@ -150,8 +196,16 @@ Token Token_stream::get()
 
 	char ch;
 	//cin >> ch;	// note that >> skips whitespace (space, newline, tab, etc.)
-	cin.get(ch);	// note that cin.get() does NOT skip whitespace
-
+	if (using_cin)
+	{
+		cin.get(ch);	// note that cin.get() does NOT skip whitespace
+		if (!cin) return Token(quit);
+	}
+	else
+	{
+		file >> ch;
+		if (!file) return Token(quit);
+	}
 	while (isspace(ch))
 	{
 		if (ch == '\n')
@@ -173,11 +227,14 @@ Token Token_stream::get()
 	case '%':
 	case '=':
 	case ',':	// we need to add the comma so the parser knows hot to treat it when encountered.
+		if (output_to_file) output << ch;
 		return Token(ch);
 	case '#':
+		if (output_to_file) output << ch;
 		return Token(let);
 	case 'h':
 	case 'H':
+		if (output_to_file) output << ch;
 		return Token(help);
 	case '.':
 	case '0':
@@ -191,9 +248,20 @@ Token Token_stream::get()
 	case '8':
 	case '9':
 	{
-		cin.putback(ch);
 		double val;
-		cin >> val;
+		if (using_cin)
+		{
+			cin.unget();
+			cin >> val;
+			if (!cin) error("Bad token");
+		}
+		else
+		{
+			file.unget();
+			file >> val;
+			if (!file) error("Bad token");
+		}
+		if (output_to_file) output << val;
 		return Token(number, val);
 	}
 
@@ -202,9 +270,21 @@ Token Token_stream::get()
 		{
 			string s;
 			s += ch;
-			while (cin.get(ch) && ((ch == '_') || isalpha(ch) || isdigit(ch)))	// Added underscores to var_table
-				s += ch;
-			cin.putback(ch);
+			if(using_cin)
+			{
+				while (cin.get(ch) && ((ch == '_') || isalpha(ch) || isdigit(ch)))	// Added underscores to var_table
+					s += ch;
+				cin.putback(ch);
+				if (!cin) error("Bad token");
+			}
+			else
+			{
+				while (file.get(ch) && ((ch == '_') || isalpha(ch) || isdigit(ch)))
+					s += ch;
+				file.unget();
+				if (!file) error("Bad token");
+			}
+			if (output_to_file) output << s;
 			if (s == "let") return Token(let);
 			if (s == "quit" || s == "exit") return Token(quit);
 			if (s == "help") return Token(help);
@@ -212,6 +292,8 @@ Token Token_stream::get()
 			if (s == "pow") return Token(pw);
 			if (s == declkey) return Token(let); // keyword "let"
 			if (s == constkey) return Token(con); // keyword "const"
+			if (s == "from") return Token(from_file);
+			if (s == "to") return Token(to_file);
 			return Token(name, s);
 		}
 		error("Bad token");
@@ -223,6 +305,7 @@ Token Token_stream::get()
 // Skip characters until its argument is matched, and throw that character away.
 void Token_stream::ignore(char c)
 {
+	if (!primary()) return;
 	if (full && c == buffer.kind) {
 		full = false;
 		return;
@@ -247,10 +330,6 @@ public:
 	bool var;		// variable (true), constant (false)
 	Variable(string n, double v, bool va = true) :name(n), value(v), var(va) { }
 };
-
-//------------------------------------------------------------------------------
-// The vector of all active variables.
-// vector<Variable> var_table;
 
 //------------------------------------------------------------------------------
 // Symbol Table Class
@@ -356,7 +435,7 @@ double primary()
 		double d = expression();
 		t = ts.get();
 		if (t.kind != ')') error("')' expected");
-		return d;	// this was missing
+		return d;
 	}
 	case '-':
 		return -primary();
@@ -485,7 +564,10 @@ double statement()
 // Skip to the next print character.
 void clean_up_mess()
 {
-	ts.ignore(print);
+	if (ts.primary())
+		ts.ignore(print);
+	else
+		ts.closefile();
 }
 
 //------------------------------------------------------------------------------
@@ -495,13 +577,15 @@ void help_instructions()
 	cout << "********************************" << endl;
 	cout << "*      SIMPLE CALCULATOR       *" << endl;
 	cout << "********************************" << endl << endl;
-	cout << "H or h or help     - This menu." << endl;
+	cout << "H or h or help    - This menu." << endl;
 	cout << "Q or quit or exit - Quit the program." << endl;
 	cout << "; or Enter        - Print output." << endl;
 	cout << "# or let          - Define variable - [a-zA-Z][a-zA-Z_0-9]*" << endl;
 	cout << "const             - Define constant - [a-zA-Z][a-zA-Z_0-9]*" << endl;
 	cout << "sqrt(number)      - Square Root function." << endl;
-	cout << "pow(number, exp)  - Power function." << endl << endl;
+	cout << "pow(number, exp)  - Power function." << endl;
+	cout << "from x            - Read from file 'x'." << endl;
+	cout << "to y              - Write output to file 'y'." << endl;
 }
 
 //------------------------------------------------------------------------------
@@ -510,25 +594,53 @@ void calculate()
 {
 	while (cin)
 		try
-	{
-		cout << prompt;
-		Token t = ts.get();
-		if (t.kind == help)
 		{
-			help_instructions();
+			cout << prompt;
+			if (output_to_file)
+				output << endl << ts.where() << ": " << prompt;
+			Token t = ts.get();
+			if (t.kind == help)
+			{
+				help_instructions();
+			}
+			else if (t.kind == from_file)
+			{
+				if (!ts.primary()) error("We are already reading input");
+				string name = ts.readname();
+				if (output_to_file) output << name << endl;
+				ts.openfile(name);
+			}
+			else if (t.kind == to_file)
+			{
+				if (output_to_file) error("Output is already copied");
+				string name = ts.readname();
+				if (output_to_file)	output << name << endl;
+				output.open(name.c_str());
+				if (!output) error("Unable to open output");
+				output_to_file = true;
+			}
+			else if (t.kind == quit) 
+			{
+				if (output_to_file) output << endl;
+				if (ts.primary()) return;
+				ts.closefile();
+			}
+			else
+			{
+				ts.putback(t);
+				double res = statement();
+				if (output_to_file)
+					output << endl << result << res << endl;
+				cout << result << res << endl;
+			}
 		}
-		else
+		catch (runtime_error& e) 
 		{
-			while (t.kind == print) t = ts.get();
-			if (t.kind == quit) return;
-			ts.putback(t);
-			cout << result << statement() << endl;
+			if (output_to_file) output << endl;
+			diagnose(e.what());
+			clean_up_mess();
 		}
-	}
-	catch (runtime_error& e) {
-		cerr << e.what() << endl;
-		clean_up_mess();
-	}
+		if (output_to_file) output << endl;
 }
 
 //------------------------------------------------------------------------------
@@ -541,16 +653,13 @@ try {
 	st.define_name("e", 2.7182818284, false);
 
 	calculate();
-	keep_window_open();
 	return 0;
 }
 catch (exception& e) {
 	cerr << e.what() << endl;
-	keep_window_open("~~");
 	return 1;
 }
 catch (...) {
 	cerr << "exception \n";
-	keep_window_open("~~");
 	return 2;
 }
