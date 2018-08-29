@@ -590,6 +590,34 @@ void help_instructions()
 
 //------------------------------------------------------------------------------
 // The main calculation loop.
+
+// This is the original calculate
+
+//void calculate()
+//{
+//	while (cin)
+//		try
+//	{
+//		cout << prompt;
+//		Token t = ts.get();
+//		if (t.kind == help)
+//		{
+//			help_instructions();
+//		}
+//		else
+//		{
+//			while (t.kind == print) t = ts.get();	// We aren't doing
+//			if (t.kind == quit) return;				// This correctly in the new version
+//			ts.putback(t);
+//			cout << result << statement() << endl;
+//		}
+//	}
+//	catch (runtime_error& e) {
+//		cerr << e.what() << endl;
+//		clean_up_mess();
+//	}
+//}
+
 void calculate()
 {
 	while (cin)
