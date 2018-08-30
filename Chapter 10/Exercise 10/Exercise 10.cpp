@@ -204,7 +204,7 @@ Token Token_stream::get()
 	else
 	{
 		file >> ch;
-		if (!file) return Token(quit);
+		if (!file) return Token(quit);	// if we are not reading from the file anymore, assume quit
 	}
 	while (isspace(ch))
 	{
@@ -591,33 +591,6 @@ void help_instructions()
 //------------------------------------------------------------------------------
 // The main calculation loop.
 
-// This is the original calculate
-
-//void calculate()
-//{
-//	while (cin)
-//		try
-//	{
-//		cout << prompt;
-//		Token t = ts.get();
-//		if (t.kind == help)
-//		{
-//			help_instructions();
-//		}
-//		else
-//		{
-//			while (t.kind == print) t = ts.get();	// We aren't doing
-//			if (t.kind == quit) return;				// This correctly in the new version
-//			ts.putback(t);
-//			cout << result << statement() << endl;
-//		}
-//	}
-//	catch (runtime_error& e) {
-//		cerr << e.what() << endl;
-//		clean_up_mess();
-//	}
-//}
-
 void calculate()
 {
 	while (cin)
@@ -647,14 +620,16 @@ void calculate()
 				if (!output) error("Unable to open output");
 				output_to_file = true;
 			}
-			else if (t.kind == quit) 
-			{
-				if (output_to_file) output << endl;
-				if (ts.primary()) return;
-				ts.closefile();
-			}
 			else
 			{
+				while (t.kind == print) t = ts.get();
+				if (t.kind == quit) 
+				{ 
+					if (output_to_file) output << endl;
+					if (ts.primary()) return;
+					ts.closefile();
+					return;
+				}
 				ts.putback(t);
 				double res = statement();
 				if (output_to_file)
