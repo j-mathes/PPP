@@ -1,7 +1,5 @@
-cow
-hat
-people
-trees
-new
+cow hat people
+trees new
 fourteen
 jones.
+
