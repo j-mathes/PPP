@@ -31,7 +31,22 @@ struct Number_base
 //----------------------------------------------------------------------------
 void output_values(Number_base i)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+  cout.setf(ios_base::left, ios_base::adjustfield);
+  cout.setf(ios_base::showbase);
+  switch (i.base)
+  {
+  case 'd':
+    cout << setw(6) << dec << i.num << setw(13) << "decimal " << setw(14) << "converts to " << setw(6) << i.num << "decimal" << endl;
+    break;
+
+  case 'o':
+    cout << setw(6) << oct << i.num << setw(13) << "octal " << setw(14) << "converts to " << setw(6) << dec << i.num << "decimal" << endl;
+    break;
+
+  case 'h':
+    cout << setw(6) << hex << i.num << setw(13) << "hexadecimal " << setw(14) << "converts to " << setw(6) << dec << i.num << "decimal" << endl;
+    break;
+  }
 }
 
 
@@ -43,6 +58,7 @@ try
 {
 	cout << "Enter integers in decimal, octal, or hexadecimal." << endl;
 	cout << "No prefix needed for decimal.  Use '0' for octal and '0x' for hexadecimal." << endl;
+  cout << "Ctrl + z + Enter for EOF." << endl << endl;
 	cout << prompt;
 
 	char ch;
