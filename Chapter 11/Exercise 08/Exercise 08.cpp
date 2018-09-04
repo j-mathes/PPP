@@ -1,13 +1,14 @@
 //----------------------------------------------------------------------------
-// File:	Exercise 07.cpp
-// Date:	2018-09-03
+// File:	Exercise 08.cpp
+// Date:	2018-09-04
 // Author:	Jared Mathes
 //----------------------------------------------------------------------------
 // Solution:Chapter 11
-// Project:	Exercise 07
+// Project:	Exercise 08
 //----------------------------------------------------------------------------
 // Description: Replace punctuation with whitespace.  Ignore between "".
 // Expands contractions can't and don't.  Leaves hyphens between words.
+// Make a dictionary and run on multi-page text file.
 //----------------------------------------------------------------------------
 
 #include "../../std_lib_facilities.h"
@@ -40,7 +41,7 @@ string change_to_whitespace(string s)
 
   istringstream is{ r };
   string o;
-  
+
   while (is >> o)
   {
     for (char& ch : o) ch = tolower(ch);
@@ -59,18 +60,36 @@ string change_to_whitespace(string s)
 int main()
 try
 {
-  cout << "Enter some text to have whitespace removed.  Anything within double" << endl;
-  cout << "quotes will be left alone. Ctrl + Z to enter, Ctrl + C to exit." << endl << endl;
+  cout << "Please enter an input file name: ";
+  string iname;
+  cin >> iname;
+
+  ifstream ifs{ iname };
+  if (!ifs) error("Can't open file ", iname);
+  ifs.exceptions(ifs.exceptions() | ios_base::badbit);
 
   string s;
-  ostringstream oss;
-  
-  while (getline(cin, s))
+  stringstream ss;
+  vector<string> temp, dictionary;
+
+  while (ifs)
   {
-    oss << change_to_whitespace(s);
+    getline(ifs, s);
+    ss << change_to_whitespace(s);
   }
+
+  for (string word; ss >> word;)
+    temp.push_back(word);
   
-  cout << oss.str() << endl;
+  sort(temp.begin(), temp.end());
+
+  for (int i=0; i < temp.size(); ++i)
+    if (i == 0 || temp[i] != temp[i - 1])
+      dictionary.push_back(temp[i]);
+
+  for (string& outp : dictionary)
+    cout << outp << endl;
+
   return 0;
 }
 
