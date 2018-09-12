@@ -1,12 +1,12 @@
 //----------------------------------------------------------------------------
-// File:	Exercise 12.cpp
+// File:	Exercise 13.cpp
 // Date:	2018-09-11
 // Author:	Jared Mathes
 //----------------------------------------------------------------------------
 // Solution:Chapter 11
-// Project:	Exercise 12
+// Project:	Exercise 13
 //----------------------------------------------------------------------------
-// Description: Reverse contents of a text file.
+// Description: Reverse order of words in a file.
 //----------------------------------------------------------------------------
 
 #include "../../std_lib_facilities.h"
@@ -32,17 +32,15 @@ try
   ofstream ofs{ oname };
   if (!ofs) error("Can't open file ", oname);
 
-  vector<char> initial_order;
-  char ch;
-  while (ifs)
-  {
-    ifs.get(ch);
-    initial_order.push_back(ch);
-  }
+  vector<string> file_strings;
+  string s;
 
-  for (int Index = initial_order.size() - 1; Index >= 0 ; Index--)
+  while (ifs >> s) file_strings.push_back(s);
+
+  for (int Index = file_strings.size() - 1; Index >= 0 ; Index--)
   {
-    ofs << initial_order[Index];
+    ofs << file_strings[Index];
+    ofs << ' ';
   }
 
 	return 0;
