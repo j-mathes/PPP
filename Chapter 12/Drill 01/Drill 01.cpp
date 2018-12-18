@@ -6,7 +6,7 @@
 // Solution:Chapter 12
 // Project:	Drill 01
 //----------------------------------------------------------------------------
-// Description: 
+// Description: Get acquainted with simple graphical output tools
 //----------------------------------------------------------------------------
 
 #include "../../std_lib_facilities.h"
