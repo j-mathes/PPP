@@ -30,6 +30,7 @@ try
 
 	Simple_window win{ tl,winX,winY,"Exercise 10" };
 
+	win.wait_for_button();
 
 	return 0;
 }
