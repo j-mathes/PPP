@@ -14,26 +14,10 @@
 #include "../../Simple_window.h"
 
 //----------------------------------------------------------------------------
+// main
 // Calculate polygon vertices
 // https://stackoverflow.com/questions/7198144/how-to-draw-a-n-sided-regular-polygon-in-cartesian-coordinates
-//----------------------------------------------------------------------------
-Closed_polyline * nPolygon(Point origin, int radius, int sides)
-{
-	Closed_polyline * p = new Closed_polyline();
-	const double pi = 3.141592653;
-
-	for (size_t i = 0; i < sides; i++)
-	{
-		int x = radius * cos(2 * pi * i / sides) + origin.x;
-		int y = radius * sin(2 * pi * i / sides) + origin.y;
-		p->add(Point{ x, y });
-	}
-
-	return p;
-}
-
-//----------------------------------------------------------------------------
-// main
+// http://www.cplusplus.com/forum/general/211865/
 //----------------------------------------------------------------------------
 int main()
 try
@@ -48,16 +32,36 @@ try
 	int origX = winX / 2;
 	int origY = winY / 2;
 
-	const int polygons = 8;
-	int polyRadius = 30;
+	const int polygons = 12;
+	int polyRadius = 50;
 
 	Point tl{ tlX,tlY };
 	Point origin{ origX,origY };
 
 	Simple_window win{ tl,winX,winY,"Exercise 10" };
 
-	for (int i = polygons + 3; i >= 3; i--)
-		win.attach(nPolygon(origin, polyRadius + i, i));
+	Vector_ref<Graph_lib::Polygon> polys;
+
+	for (int i = polygons + 2; i >= 3; i--)
+	{
+		constexpr double pi = 3.14159265359;
+		Graph_lib::Polygon *poly = new Graph_lib::Polygon;
+		for (int j = 1; j <= i; ++j)
+		{
+			int x = (polyRadius + (i * 4)) * cos(2 * pi * j / i) + origin.x;
+			int y = (polyRadius + (i * 4)) * sin(2 * pi * j / i) + origin.y;
+			poly->add(Point{ x, y });
+		}
+		poly->set_color(Color::black);
+		int index = (i % 15 );
+		poly->set_fill_color(index);
+		polys.push_back(poly);
+	}
+
+	for (int i = 0; i < polys.size(); i++)
+	{
+		win.attach(polys[i]);
+	}
 
 	win.wait_for_button();
 
