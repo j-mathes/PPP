@@ -1,12 +1,12 @@
 //----------------------------------------------------------------------------
-// File:	Exercise 11.cpp
-// Date:	2018-12-20
+// File:	Exercise 12.cpp
+// Date:	2018-12-21
 // Author:	JaredM
 //----------------------------------------------------------------------------
 // Solution:Chapter 12
-// Project:	Exercise 11
+// Project:	Exercise 12
 //----------------------------------------------------------------------------
-// Description: Series of polygons
+// Description: Star shape based on super ellipse
 //----------------------------------------------------------------------------
 
 #include "../../std_lib_facilities.h"
@@ -15,9 +15,6 @@
 
 //----------------------------------------------------------------------------
 // main
-// Calculate polygon vertices
-// https://stackoverflow.com/questions/7198144/how-to-draw-a-n-sided-regular-polygon-in-cartesian-coordinates
-// http://www.cplusplus.com/forum/general/211865/
 //----------------------------------------------------------------------------
 int main()
 try
@@ -32,36 +29,34 @@ try
 	int origX = winX / 2;
 	int origY = winY / 2;
 
-	const int polygons = 12;
-	int polyRadius = 50;
+	const int shapePoints = 7;
+	const int shapeRadius = 50;
+
+	constexpr double pi = 3.14159265359;
 
 	Point tl{ tlX,tlY };
 	Point origin{ origX,origY };
 
-	Simple_window win{ tl,winX,winY,"Exercise 11" };
+	Simple_window win{ tl,winX,winY,"Exercise 12" };
 
-	Vector_ref<Graph_lib::Polygon> polys;
-
-	for (int i = polygons + 2; i >= 3; i--)
+	vector<Point> pts;
+	for (int i = 1; i <= shapePoints; i++)
 	{
-		constexpr double pi = 3.14159265359;
-		Graph_lib::Polygon *poly = new Graph_lib::Polygon;
-		for (int j = 1; j <= i; ++j)
+		int x = static_cast<int> (shapeRadius * cos(2 * pi * i / shapePoints) + origin.x);
+		int y = static_cast<int> (shapeRadius * sin(2 * pi * i / shapePoints) + origin.y);
+		pts.push_back(Point{ x,y });
+	}
+
+	Graph_lib::Lines shapeLines;
+	for (int i = 0; i < pts.size(); ++i)
+	{
+		for (int j = 0; j < pts.size(); ++j)
 		{
-			int x = (polyRadius + (i * 4)) * cos(2 * pi * j / i) + origin.x;
-			int y = (polyRadius + (i * 4)) * sin(2 * pi * j / i) + origin.y;
-			poly->add(Point{ x, y });
+			shapeLines.add(pts[i], pts[j]);
 		}
-		poly->set_color(Color::black);
-		int index = (i % 15 );
-		poly->set_fill_color(index);
-		polys.push_back(poly);
 	}
 
-	for (int i = 0; i < polys.size(); i++)
-	{
-		win.attach(polys[i]);
-	}
+	win.attach(shapeLines);
 
 	win.wait_for_button();
 
