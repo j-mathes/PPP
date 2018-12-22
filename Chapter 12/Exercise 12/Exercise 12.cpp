@@ -14,6 +14,21 @@
 #include "../../Simple_window.h"
 
 //----------------------------------------------------------------------------
+// sgn - determine return value based on input
+//----------------------------------------------------------------------------
+int sgn(double d) {
+
+	if (d < 0)
+		return -1;
+	if (d == 0)
+		return 0;
+	if (d > 0)
+		return 1;
+	// exception
+	error("sgn: something gone wrong\n");
+}
+
+//----------------------------------------------------------------------------
 // main
 //----------------------------------------------------------------------------
 int main()
@@ -29,10 +44,16 @@ try
 	int origX = winX / 2;
 	int origY = winY / 2;
 
-	const int shapePoints = 7;
-	const int shapeRadius = 50;
-
 	constexpr double pi = 3.14159265359;
+
+	// Super ellipse parameters
+
+	double a = 250;
+	double b = 250;
+	double m = 1.5;
+	double n = 1.5;
+
+	double precision = 0.1;
 
 	Point tl{ tlX,tlY };
 	Point origin{ origX,origY };
@@ -40,19 +61,27 @@ try
 	Simple_window win{ tl,winX,winY,"Exercise 12" };
 
 	vector<Point> pts;
-	for (int i = 1; i <= shapePoints; i++)
-	{
-		int x = static_cast<int> (shapeRadius * cos(2 * pi * i / shapePoints) + origin.x);
-		int y = static_cast<int> (shapeRadius * sin(2 * pi * i / shapePoints) + origin.y);
-		pts.push_back(Point{ x,y });
+	Point temp;
+	Point point;
+	for (double d = -1.0; d < 1.0; d += precision) {
+		double t = d * pi;
+		int x = static_cast<int> (a * pow(abs(cos(t)), 2.0 / m) * sgn(cos(t)));
+		int y = static_cast<int> (b * pow(abs(sin(t)), 2.0 / n) * sgn(sin(t)));
+
+		point = Point{ x + origX, y + origY };
+		if (temp != point) pts.push_back(point); // Check for duplicates
+		temp = point;
 	}
 
 	Graph_lib::Lines shapeLines;
-	for (int i = 0; i < pts.size(); ++i)
+	for (size_t i = 0; i < pts.size(); ++i)
 	{
-		for (int j = 0; j < pts.size(); ++j)
+		for (size_t j = 0; j < pts.size(); ++j)
 		{
-			shapeLines.add(pts[i], pts[j]);
+			if (i != j)
+			{
+				shapeLines.add(pts[i], pts[j]);
+			}
 		}
 	}
 
