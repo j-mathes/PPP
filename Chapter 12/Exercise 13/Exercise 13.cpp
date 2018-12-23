@@ -73,7 +73,7 @@ try
 		temp = point;
 	}
 
-	Graph_lib::Lines shapeLines;
+	Vector_ref<Line> starLines;
 	int count = 0;
 	for (size_t i = 0; i < pts.size(); ++i)
 	{
@@ -81,14 +81,13 @@ try
 		{
 			if (i != j)
 			{
-				shapeLines.set_color(count % 15);
-				shapeLines.add(pts[i], pts[j]);
+				starLines.push_back(new Line{ pts[i], pts[j] });
+				starLines[starLines.size() - 1].set_color(count % 16);
+				win.attach(starLines[starLines.size() - 1]);
 				count++;
 			}
 		}
 	}
-
-	win.attach(shapeLines);
 
 	win.wait_for_button();
 
