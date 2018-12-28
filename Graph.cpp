@@ -17,7 +17,7 @@ void Shape::draw() const
 	fl_color(lcolor.as_int());
 	fl_line_style(ls.style(),ls.width());
 	draw_lines();
-	fl_color(oldc);	// reset color (to pevious) and style (to default)
+	fl_color(oldc);	// reset color (to previous) and style (to default)
 	fl_line_style(0);
 }
 

@@ -29,7 +29,7 @@ try
 
 	Point tl{ tlX,tlY };
 
-	Simple_window win{ tl,winX,winY,"Chapter 13, Exercise 04" };
+	Simple_window win{ tl,winX,winY,"Chapter 13, Exercise 05" };
 	Graph_lib::Circle c(Point{ 200,200 }, 150);
 	c.set_color(Color::black);
 	win.attach(c);
