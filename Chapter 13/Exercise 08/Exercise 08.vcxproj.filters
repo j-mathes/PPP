@@ -27,7 +27,7 @@
     <ClCompile Include="Exercise 08.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Hexagon.cpp">
+    <ClCompile Include="Regular_hexagon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,7 +53,7 @@
     <ClInclude Include="..\..\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Hexagon.h">
+    <ClInclude Include="Regular_hexagon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

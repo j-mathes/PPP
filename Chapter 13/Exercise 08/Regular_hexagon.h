@@ -2,11 +2,11 @@
 #include "../../Graph.h"
 namespace Graph_lib
 {
-	class Hexagon :
+	class Regular_hexagon :
 		public Shape
 	{
 	public:
-		Hexagon(Point p, int rr)
+		Regular_hexagon(Point p, int rr)
 			:r{ rr }
 		{
 			add(Point{ p.x - r, p.y - r });

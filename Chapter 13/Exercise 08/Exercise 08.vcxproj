@@ -132,7 +132,7 @@
     <ClCompile Include="..\..\GUI.cpp" />
     <ClCompile Include="..\..\Window.cpp" />
     <ClCompile Include="Exercise 08.cpp" />
-    <ClCompile Include="Hexagon.cpp" />
+    <ClCompile Include="Regular_hexagon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\fltk.h" />
@@ -142,7 +142,7 @@
     <ClInclude Include="..\..\Simple_window.h" />
     <ClInclude Include="..\..\std_lib_facilities.h" />
     <ClInclude Include="..\..\Window.h" />
-    <ClInclude Include="Hexagon.h" />
+    <ClInclude Include="Regular_hexagon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

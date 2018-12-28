@@ -6,13 +6,13 @@
 // Solution:Chapter 13
 // Project:	Exercise 08
 //----------------------------------------------------------------------------
-// Description: Regular Hexagon class
+// Description: Regular Regular_hexagon class
 //----------------------------------------------------------------------------
 
 #include "../../std_lib_facilities.h"
 #include "../../Graph.h"
 #include "../../Simple_window.h"
-#include "Hexagon.h"
+#include "Regular_hexagon.h"
 
 //----------------------------------------------------------------------------
 // main
@@ -31,7 +31,7 @@ try
 
 	Simple_window win{ tl,winX,winY,"Chapter 13, Exercise 08" };
 
-	Hexagon h(Point{ 300,300 }, 100);
+	Regular_hexagon h(Point{ 300,300 }, 100);
 	h.set_color(Color::black);
 	win.attach(h);
 

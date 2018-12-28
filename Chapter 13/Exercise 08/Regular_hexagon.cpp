@@ -1,6 +1,6 @@
-#include "Hexagon.h"
+#include "Regular_hexagon.h"
 
-void Graph_lib::Hexagon::draw_lines() const
+void Graph_lib::Regular_hexagon::draw_lines() const
 {
 	Polygon hex_poly;
 	for (int i=0; i<6; ++i)
@@ -10,7 +10,7 @@ void Graph_lib::Hexagon::draw_lines() const
 	hex_poly.draw_lines();
 }
 
-Graph_lib::Point Graph_lib::Hexagon::hexagon_point(int d) const
+Graph_lib::Point Graph_lib::Regular_hexagon::hexagon_point(int d) const
 {
 	double radians = d * 3.14159265 / 180;
 	Point result;
