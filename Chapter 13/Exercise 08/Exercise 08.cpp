@@ -37,6 +37,28 @@ try
 
 	win.wait_for_button();
 
+	Simple_window win1{ tl,winX,winY,"Chapter 13, Exercise 09" };
+
+	vector<Point> centers;
+	int s = 50;
+	for (int i = 0; i < win1.y_max() / (sqrt(3) / 2.0*s); ++i) {
+		for (int j = 0; j < win1.x_max() / 3.0 / s; ++j) {
+			int dx = 0;
+			if (i % 2 == 0) dx = 0;
+			else dx = static_cast<int>(round(1.5*s));
+			centers.push_back(Point(j * 3 * s + dx, static_cast<int>(i*sqrt(3) / 2 * s)));
+		}
+	}
+
+	Vector_ref<Regular_hexagon> hexagons;
+	for (size_t i = 0; i < centers.size(); ++i)
+	{
+		hexagons.push_back(new Regular_hexagon(centers[i], s));
+		hexagons[hexagons.size() - 1].set_color(Color::black);
+		win1.attach(hexagons[hexagons.size() - 1]);
+	}
+
+	win1.wait_for_button();
 	return 0;
 }
 
