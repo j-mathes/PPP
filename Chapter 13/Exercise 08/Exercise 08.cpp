@@ -37,12 +37,12 @@ try
 
 	win.wait_for_button();
 
-	Simple_window win1{ tl,winX,winY,"Chapter 13, Exercise 09" };
+	Simple_window win1{ tl,winX,winY,"Chapter 13, Exercise 09 & 16" };
 
 	vector<Point> centers;
 	int s = 50;
-	for (int i = 0; i < win1.y_max() / (sqrt(3) / 2.0*s); ++i) {
-		for (int j = 0; j < win1.x_max() / 3.0 / s; ++j) {
+	for (int i = 0; i < (win1.y_max() / (sqrt(3) / 2.0*s))+s; ++i) {
+		for (int j = 0; j < (win1.x_max() / 3.0 / s)+s; ++j) {
 			int dx = 0;
 			if (i % 2 == 0) dx = 0;
 			else dx = static_cast<int>(round(1.5*s));
