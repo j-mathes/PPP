@@ -29,7 +29,7 @@ try
 
 	Point tl{ tlX,tlY };
 
-	Simple_window win{ tl,winX,winY,"Chapter 13, Exercise 08" };
+	Simple_window win{ tl,winX,winY,"Chapter 13, Exercise 10" };
 
 	Regular_polygon h(Point{ 300,300 }, 100, 3);
 	h.set_color(Color::black);
