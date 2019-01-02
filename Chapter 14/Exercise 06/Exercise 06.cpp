@@ -1,18 +1,18 @@
 //----------------------------------------------------------------------------
-// File:	Exercise 05.cpp
+// File:	Exercise 06.cpp
 // Date:	2019-01-01
 // Author:	Jared
 //----------------------------------------------------------------------------
 // Solution:Chapter 14
-// Project:	Exercise 05
+// Project:	Exercise 06
 //----------------------------------------------------------------------------
-// Description: Striped Rectangle class
+// Description: Striped Circle class
 //----------------------------------------------------------------------------
 
 #include "../../std_lib_facilities.h"
 #include "../../Graph.h"
 #include "../../Simple_window.h"
-#include "../Classes/Striped_Rectangle.h"
+#include "../Classes/Striped_Circle.h"
 
 //----------------------------------------------------------------------------
 // main
@@ -29,13 +29,14 @@ try
 
 	Point tl{ tlX,tlY };
 
-	Simple_window win{ tl,winX,winY,"Chapter 14, Exercise 05" };
-	Striped_Rectangle sr(Point{ 50,50 }, 300, 100);
-	sr.set_color(Color::blue);
-	sr.set_fill_color(Color::green);
-	win.attach(sr);
+	Simple_window win{ tl,winX,winY,"Chapter 14, Exercise 06" };
+	Striped_Circle sc(Point{ 300,300 }, 200);
+	sc.set_color(Color::blue);
+	sc.set_fill_color(Color::green);
+	win.attach(sc);
 
 	win.wait_for_button();
+
 	return 0;
 }
 
