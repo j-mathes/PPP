@@ -2,6 +2,9 @@
 #include "../../Graph.h"
 namespace Graph_lib
 {
+	bool lie_on_line(Point p1, Point p2, Point current);
+	bool line_segment_intersection(Point p1, Point p2, Point p3, Point p4, Point &intersect);
+
 	Point point_on_circle(Circle&, int);
 	Point point_on_ellipse(Ellipse &, int);
 
