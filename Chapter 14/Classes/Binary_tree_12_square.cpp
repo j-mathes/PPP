@@ -10,12 +10,10 @@ void Graph_lib::Binary_tree_12_square::draw_lines() const
 
 		fl_color(fl_rgb_color(192, 192, 192));
 		for (int i = 0; i < number_of_points(); ++i)
-			//fl_pie(point(i).x - node_dimensions, point(i).y - node_dimensions, node_dimensions + node_dimensions - 1, node_dimensions + node_dimensions - 1, 0, 360);
 			fl_rectf(point(i).x - node_dimensions, point(i).y - node_dimensions, 2 * node_dimensions, 2 * node_dimensions);
 		fl_color(color().as_int());	// reset color
 		fl_color(0, 0, 0);
 		for (int i = 0; i < number_of_points(); ++i)
-			//fl_arc(point(i).x - node_dimensions, point(i).y - node_dimensions, node_dimensions + node_dimensions, node_dimensions + node_dimensions, 0, 360);
 			fl_rect(point(i).x - node_dimensions, point(i).y - node_dimensions, 2 * node_dimensions, 2 * node_dimensions);
 	}
 }
