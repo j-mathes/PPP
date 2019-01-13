@@ -6,15 +6,18 @@ namespace Graph_lib
 		public Shape
 	{
 	public:
-		Binary_tree(int ll = 0)
-			:l{ ll }
-		{
-		}
-	
-		void draw() const;
+		Binary_tree(Point xy, int levels);
+		void draw_lines() const;
+		void move(int dx, int dy);
+
+	protected:
+		Vector_ref<Shape> edges;
 
 	private:
-		int l;
+		int lvl;
+		const int dltX = 35;	// lateral distance between nodes - delta x
+		const int dltY = 100;	// vertical distance between levels - delta y
+		const int node_radius = 12;
 	};
 }
 

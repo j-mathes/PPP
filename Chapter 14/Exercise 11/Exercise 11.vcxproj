@@ -132,7 +132,6 @@
     <ClCompile Include="..\..\GUI.cpp" />
     <ClCompile Include="..\..\Window.cpp" />
     <ClCompile Include="..\Classes\Binary_tree.cpp" />
-    <ClCompile Include="..\Classes\Node.cpp" />
     <ClCompile Include="Exercise 11.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -144,7 +143,6 @@
     <ClInclude Include="..\..\std_lib_facilities.h" />
     <ClInclude Include="..\..\Window.h" />
     <ClInclude Include="..\Classes\Binary_tree.h" />
-    <ClInclude Include="..\Classes\Node.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
