@@ -27,7 +27,7 @@ struct Person
 
 	friend ostream &operator <<(ostream &output, Person person)
 	{
-		output << name << "," << age;
+		output << person.name << "," << person.age;
 	}
 
 	friend istream &operator >>(istream &input, Person &person)
