@@ -24,7 +24,7 @@
     <ClCompile Include="..\..\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Exercise.cpp">
+    <ClCompile Include="Drill A.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

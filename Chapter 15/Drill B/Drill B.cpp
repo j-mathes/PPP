@@ -20,6 +20,12 @@ struct Person
 		{
 			error("Age must be between 0 and 150");
 		}
+
+		string illegalChars = ";:\"'[]*&^%$#@!";
+		if (name.find_first_of(illegalChars) != string::npos)
+		{
+			error("Name cannot contain any of the following: ;:\"'[]*&^%$#@!");
+		}
 	}
 
 	string mName() const { return name; }
